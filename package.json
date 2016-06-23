@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/The-Quill/StackNews/issues"
   },
-  "homepage": "https://github.com/The-Quill/StackNews#readme"
+  "homepage": "https://github.com/The-Quill/StackNews#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.10.1"
+  }
 }
