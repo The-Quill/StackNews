@@ -1,0 +1,19 @@
+{
+  "name": "stack-news",
+  "version": "1.0.0",
+  "description": "A platform for viewing the new Meta posts from Stack Exchange.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Quill/StackNews.git"
+  },
+  "author": "The-Quill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/The-Quill/StackNews/issues"
+  },
+  "homepage": "https://github.com/The-Quill/StackNews#readme"
+}
