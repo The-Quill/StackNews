@@ -16,8 +16,12 @@
     "url": "https://github.com/The-Quill/StackNews/issues"
   },
   "homepage": "https://github.com/The-Quill/StackNews#readme",
+  "dependencies": {
+    "cheerio": "^0.20.0"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
-    "babel-cli": "^6.10.1"
+    "babel-cli": "^6.10.1",
+    "request-promise": "^3.0.0"
   }
 }
