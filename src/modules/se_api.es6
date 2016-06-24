@@ -9,10 +9,11 @@ function fetchUntilEnd(options, iteration){
             var queryStrings = querystring.parse('');
             var url = options.url;
             if (options.url.split('?').length > 1){
-                queryStrings = querystring.parse(options.url.split('?')[1]);
-                url = options.url.split('?')[0];
+                queryStrings = querystring.parse(options.url.split('?')[1])
+                url = options.url.split('?')[0]
             }
-            queryStrings.page = generatePageVar();
+            queryStrings.page = generatePageVar()
+            queryStrings.pagesize = 100
             options.url = `${url}?${querystring.stringify(queryStrings) || 1}`
             return JsonRequest(options)
             .catch(...error => reject([...error]))
