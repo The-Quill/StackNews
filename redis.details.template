@@ -1,12 +1,15 @@
 {
+    "current_environment": "dev",
     "environments": {
         "prod": {
             "host": "",
-            "port": "6379"
+            "port": "6379",
+            "password": ""
         },
         "dev": {
             "host": "127.0.0.1",
-            "port": "6379"
+            "port": "6379",
+            "password": ""
         }
     }
 }
