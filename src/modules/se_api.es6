@@ -18,7 +18,7 @@ export function Url(url){
     }
 }
 export const is = {
-    Meta: name => { name.toLowerCase().includes('meta') },
+    Meta: name => { return name.toLowerCase().includes('meta') },
     Main: name => { return name.toLowerCase() != "meta stack exchange" && !name.toLowerCase().includes('meta') }
 }
 async function fetchUntilEnd(options, iteration){
