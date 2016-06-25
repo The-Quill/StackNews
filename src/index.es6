@@ -1,70 +1,70 @@
 import { GetSiteList, GetMetaSites, GetPostsFromMeta } from './modules/se_api'
 import { RedisSession } from './modules/redis'
-import moment from 'moment'
+import { Time } from './modules/time'
 
-var session = new RedisSession();
+const session = new RedisSession();
+const time    = new Time();
 
-var now = moment().valueOf();
-
-const time = {
-    is: {
-        before: (first, second) => {
-            return moment(+first).isBefore(+moment)
-        },
-        after: (first, second) => {
-            return moment(+first).isAfter(+moment)
-        }
-    },
-    isA: {
-        weekOlder: (first, second) => {
-            return moment(+first).add(7, 'days').isAfter(moment(+second))
-        },
-        dayOlder: (first, second) => {
-            return moment(+first).add(1, 'days').isAfter(moment(+second))
-        }
-    }
-}
-
-session.client.getAsync('site:last-fetch-date')
+session.client.getAsync('post:last-fetch-date')
 .then(async function(res, reply) {
-    console.log(reply === null)
-    console.log(time.isA.weekOlder(res, now))
-    if (reply === null || time.isA.weekOlder(res, now)){
-        await updateMetaSites();
-        session.client.setAsync('site:last-fetch-date', now)
+    if (reply === null || time.weekOlder(res)){
+        let sites = await session.client.smembersAsync('sites');
+        await Promise.all(
+            sites.map(async function(site){
+                (await GetPostsFromMeta(site, null))
+                .map(post => updatePost(site, post))
+            })
+        )
+        session.client.setAsync('post:last-fetch-date', time.now)
+        return Promise.resolve()
     } else {
-        console.log(2)
-        var sites = await session.client.getAsync('sites');
-        console.log("got sites");
-        sites.forEach(site => console.log(` - site`))
+        // do last modified magic here
+        //
+        await Promise.all(
+            sites.map(async function(site){
+                (await GetPostsFromMeta(site, res))
+                .map(post => updatePost(site, post))
+            })
+        )
+        session.client.setAsync('post:last-fetch-date', time.now)
+        return Promise.resolve()
     }
 });
-
-async function updateMetaSites(){
-    try {
-        let sites = await GetMetaSites();
-        return Promise.all(sites.map(async function(site){
-            await session.client.saddAsync('sites', site.api_site_parameter);
-            const key = `site:${site.api_site_parameter}`;
-            var data = []
-            let addData = (...keys) => {
-                keys.forEach(key => {
-                    if (key == null) return
-                    data.push(key)
-                    data.push(site[key] || "")
-                });
-            }
-            addData(
-                "high_resolution_icon_url",
-                "icon_url",
-                "favicon_url",
-                "logo_url",
-                "api_site_parameter",
-                "name"
-            )
-            return session.client.hmsetAsync([key, ...data])
-        }))
-    } catch (error){
-        return Promise.reject(error)
+async function updatePost(site, post){
+    await session.client.saddAsync('posts', `${site}:${post.question_id}`);
+    await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
+    const postKey = `post:${site}:${post.question_id}`;
+    var data = []
+    let addData = (...keys) => {
+        keys.forEach(key => {
+            if (key == null) return
+            data.push(key)
+            data.push(site[key] || "")
+        });
     }
+    addData(
+        "title",
+        "view_count",
+        "answer_count",
+        "score",
+        "question_id",
+        "name",
+        "last_activity_date",
+        "creation_date",
+        "is_answered",
+        "accepted_answer_id",
+        "answer_count"
+    )
+    data.push("tags")
+    data.push(JSON.stringify(result.tags))
+    data.push("owner:ismoderator")
+    data.push(result.owner.user_type == "moderator")
+    data.push("owner:name")
+    data.push(result.owner.display_name)
+    data.push("owner:id")
+    data.push(result.owner.user_id)
+    data.push("owner:image")
+    data.push(result.owner.profile_image)
+    console.log(data);
+    return session.client.hmsetAsync([postKey, ...data])
 }
