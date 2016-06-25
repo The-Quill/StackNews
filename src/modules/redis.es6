@@ -15,6 +15,7 @@ const RedisSession = {
         redis.createClient(env)
         client.on("error", err => console.log(`Error ${err}`))
     },
-    end: () => client.quit()
+    end: () => client.quit(),
+    client: client
 }
 export { RedisSession }
