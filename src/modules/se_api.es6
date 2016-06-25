@@ -1,7 +1,7 @@
 import { HtmlRequest, JsonRequest } from './request'
 import querystring from 'querystring';
 
-function Url(url){
+export function Url(url){
     var queryStrings = querystring.parse('');
     var newUrl = url;
     if (url.split('?').length > 1){
@@ -17,7 +17,7 @@ function Url(url){
         queryStrings: queryStrings
     }
 }
-const is = {
+export const is = {
     Meta: name => { name.toLowerCase().includes('meta') },
     Main: name => { return name.toLowerCase() != "meta stack exchange" && !name.toLowerCase().includes('meta') }
 }
@@ -59,7 +59,7 @@ async function fetchOnce(options, iteration){
         throw error;
     }
 }
-async function GetSiteList(){
+export async function GetSiteList(){
     var sites = [];
     var options = {
         url: 'https://api.stackexchange.com/2.2/sites',
@@ -72,13 +72,13 @@ async function GetSiteList(){
         Promise.reject()
     }
 }
-async function SiteNameToApiFormat(sitename){
+export async function SiteNameToApiFormat(sitename){
     sitename = sitename.toLowerCase();
     var isMeta = sitename.contains('meta')
     // this should use a /sites lookup, but for now, no dice.
     return `${isMeta ? 'meta.' : ''}${sitename.replace('meta', '').replace(/ /g, '')}`;
 }
-async function GetPostsFromMeta(sitename){
+export async function GetPostsFromMeta(sitename){
     var posts = [];
     var options = {
         url: `https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=${sitename}`,
@@ -91,7 +91,7 @@ async function GetPostsFromMeta(sitename){
         Promise.reject()
     }
 }
-async function GetMetaSites(){
+export async function GetMetaSites(){
     try {
         let sites = await GetSiteList(options, post => posts.push(post))
         Promise.resolve(sites.filter(site => is.Meta(site)))
@@ -99,4 +99,3 @@ async function GetMetaSites(){
         Promise.reject()
     }
 }
-export { GetSiteList, GetMetaSites, GetPostsFromMeta, SiteNameToApiFormat, is }

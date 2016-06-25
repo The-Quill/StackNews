@@ -1,8 +1,6 @@
 import { GetSiteList, GetMetaSites, GetPostsFromMeta } from './modules/se_api'
 import { RedisSession } from './modules/redis'
 
-
-
 client.set("foo", "bar", redis.print);
 client.getAsync('foo').then(function(res) {
     console.log(res); // => 'bar'
