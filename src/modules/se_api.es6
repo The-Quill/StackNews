@@ -1,4 +1,5 @@
 import { HtmlRequest, JsonRequest } from './request'
+import { Time } from './time'
 import querystring from 'querystring';
 
 async function SiteNameToApiFormat(sitename){
@@ -36,10 +37,12 @@ async function fetchUntilEnd(options, iteration){
         var i = 0;
         while (hasMore){
             var url = Url(options.url);
+            url.queryStrings.key = "zDO2gMEs69ZZpSZRjl6LFw((";
             url.queryStrings.page = generatePageVar()
             url.queryStrings.pagesize = url.queryStrings.pagesize || 100;
             options.url = url.generate()
             let result = await JsonRequest(options);
+            console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
             items = Array.concat(items, result.items)
             hasMore = result.hasOwnProperty('has_more') ? result.has_more : false
         }
@@ -56,6 +59,7 @@ async function fetchOnce(options, iteration){
             queryStrings = querystring.parse(options.url.split('?')[1])
             url = options.url.split('?')[0]
         }
+        url.queryStrings.key = "zDO2gMEs69ZZpSZRjl6LFw((";
         queryStrings.pagesize = 100
         options.url = `${url}?${querystring.stringify(queryStrings) || 1}`
         let result = await JsonRequest(options)
@@ -85,14 +89,16 @@ async function GetMetaSites(){
         return Promise.reject()
     }
 }
-async function GetPostsFromMeta(sitename){
+async function GetPostsFromMeta(sitename, modifiedDate){
     var options = {
-        url: `https://api.stackexchange.com/2.2/questions?order=desc&sort=creation&site=${sitename}`,
+        url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!gB57Fc-gHH5vhESOcDSS28xXhsx8UxMt5CF&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
         method: 'GET'
     }
     try {
-        let posts = await fetchUntilEnd(options)
+        let posts = await fetchOnce(options)
+        console.log(` - Grabbed ${posts.length} posts from ${sitename}`)
         return Promise.resolve(posts)
+        return Promise.reject()
     } catch (error){
         return Promise.reject()
     }
