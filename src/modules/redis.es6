@@ -11,12 +11,14 @@ const env = redisDetails.environments[
 
 class RedisSession {
     constructor(){
-        this.client = redis.createClient(env);
-        client.on("error", err => console.log(`Error ${err}`))
-    },
-    end() => this.client.quit(),
+        this._client = redis.createClient(env);
+        this._client.on("error", err => console.log(`Error ${err}`))
+    }
+    end(){
+        this._client.quit()
+    }
     get client(){
-        return this.client;
+        return this._client;
     }
 }
 export { RedisSession }
