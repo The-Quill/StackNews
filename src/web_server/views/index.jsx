@@ -1,9 +1,11 @@
-var React = require('react');
+import ReactDOM from 'react-dom'
+import React from 'react'
+import Components from './components.es6'
 
-var HelloMessage = React.createClass({
-    render: function() {
-        return <div>Hello {this.props.name}</div>;
+export React.createClass({
+    render(){
+        <div>
+            <Components.ListItem rooms={}></Components.ListItem>
+        </div>
     }
-});
-
-module.exports = HelloMessage;
+)
