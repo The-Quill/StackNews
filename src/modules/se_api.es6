@@ -43,7 +43,8 @@ async function fetchUntilEnd(options, iteration){
             url.queryStrings.pagesize = url.queryStrings.pagesize || 100;
             options.url = url.generate()
             let result = await JsonRequest(options);
-            if (result.backoff){
+            if (result.hasOwnProperty('backoff')){
+                await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
             }
             await sleep.sleep(4)
@@ -64,6 +65,9 @@ async function fetchOnce(options, iteration){
         url.queryStrings.pagesize = 100
         options.url = url.generate()
         let result = await JsonRequest(options)
+        if (result.hasOwnProperty('backoff')){
+            await sleep.sleep(result.backoff)
+        }
         await sleep.sleep(4)
         return Promise.resolve(result.items);
     } catch(error){
@@ -91,7 +95,7 @@ async function GetMetaSites(){
         return Promise.reject()
     }
 }
-async function GetPostsFromMeta(sitename, modifiedDate){
+async function GetPostsFromSite(sitename, modifiedDate){
     var options = {
         url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!gB57Fc-gHH5vhESOcDSS28xXhsx8UxMt5CF&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
         method: 'GET'
@@ -105,4 +109,4 @@ async function GetPostsFromMeta(sitename, modifiedDate){
     }
 }
 
-export { GetMetaSites, GetPostsFromMeta, GetSiteList, SiteNameToApiFormat, Url, is }
+export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, Url, is }
