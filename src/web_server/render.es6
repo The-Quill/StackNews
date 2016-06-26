@@ -1,6 +1,7 @@
 import express from 'express'
 import path from 'path'
 import { renderToString } from 'react-dom/server'
+import IndexRoute from './routes/index'
 const app = express()
 
 // app.use(function (req, res, next) {
@@ -13,10 +14,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
-
-
-
-app.get('/', require('./routes').index);
+app.get('/', IndexRoute);
 
 //Route not found -- Set 404
 app.get('*', function(req, res) {
@@ -24,10 +22,6 @@ app.get('*', function(req, res) {
         'route': 'Sorry this page does not exist!'
     });
 });
-
-
-
-
 
 app.listen(port);
 console.log('Server is Up and Running at Port : ' + port);
