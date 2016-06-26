@@ -22,7 +22,7 @@ session.client.getAsync('post:last-fetch-date')
         //
         let sites = await session.client.smembersAsync('sites');
         await Promise.all(
-            sites.slice(0, 2).map(async function(site){
+            sites.map(async function(site){
                 let posts = await GetPostsFromSite(site, res)
                 return posts.map(post => updatePost(site, post))
             })
