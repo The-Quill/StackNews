@@ -1,6 +1,6 @@
-import { GetSiteList, GetMetaSites, GetPostsFromMeta } from './modules/se_api'
-import { RedisSession } from './modules/redis'
-import { Time } from './modules/time'
+import { GetPostsFromSite } from '../modules/se_api'
+import { RedisSession } from '../modules/redis'
+import { Time } from '../modules/time'
 
 const session = new RedisSession();
 const time    = new Time();
@@ -11,7 +11,7 @@ session.client.getAsync('post:last-fetch-date')
         let sites = await session.client.smembersAsync('sites');
         await Promise.all(
             sites.map(async function(site){
-                let posts = await GetPostsFromMeta(site, null)
+                let posts = await GetPostsFromSite(site, null)
                 return posts.map(post => updatePost(site, post))
             })
         )
@@ -23,7 +23,7 @@ session.client.getAsync('post:last-fetch-date')
         let sites = await session.client.smembersAsync('sites');
         await Promise.all(
             sites.slice(0, 2).map(async function(site){
-                let posts = await GetPostsFromMeta(site, res)
+                let posts = await GetPostsFromSite(site, res)
                 return posts.map(post => updatePost(site, post))
             })
         )
