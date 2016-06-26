@@ -18,6 +18,12 @@
   "homepage": "https://github.com/The-Quill/StackNews#readme",
   "dependencies": {
     "cheerio": "^0.20.0",
+    "express": "^4.14.0",
+    "express-react-views": "^0.10.2",
+    "node-jsx": "^0.13.3",
+    "path": "^0.12.7",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
     "redis": "^2.6.2"
   },
   "devDependencies": {
