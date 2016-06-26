@@ -1,11 +1,12 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
-import Components from './components.es6'
+import { List } from '../components.es6'
 
-export React.createClass({
+var Index = React.createClass({
     render(){
-        <div>
-            <Components.ListItem rooms={}></Components.ListItem>
+        return <div>
+            <List items={this.props.items}></List>
         </div>
     }
-)
+})
+
+export { Index as default }
