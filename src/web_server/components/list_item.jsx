@@ -1,11 +1,15 @@
 import React from 'react'
 
 const ListItem = React.createClass({
+    getInitialState(){
+        console.log(this.props.item);
+        return {}
+    },
     render () {
         return (
-            <div className="avatar single">
-                <img src={this.props.user.image} />
-                <div className="username small">{this.props.user.name}</div>
+            <div className="list-item">
+                <img src={this.props.item['owner:image']} />
+                <div className="content">{this.props.item.title}</div>
             </div>
         )
     }
