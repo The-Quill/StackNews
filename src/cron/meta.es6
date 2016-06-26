@@ -1,6 +1,6 @@
-import { GetSiteList, GetMetaSites, GetPostsFromMeta } from './modules/se_api'
-import { RedisSession } from './modules/redis'
-import { Time } from './modules/time'
+import { GetMetaSites } from '../modules/se_api'
+import { RedisSession } from '../modules/redis'
+import { Time } from '../modules/time'
 
 const session = new RedisSession();
 const time    = new Time();
@@ -8,15 +8,11 @@ const time    = new Time();
 session.client.getAsync('site:last-fetch-date')
 .then(async function(res, reply) {
     if (reply === null || time.weekOlder(res)){
-        await updateMetaSites();
-        session.client.setAsync('site:last-fetch-date', time.now)
-        return Promise.resolve()
-    } else {
-        var sites = await session.client.smembersAsync('sites');
-        console.log("got sites");
-        sites.forEach(site => console.log(` - ${site}`))
-        return Promise.resolve()
+        let sites = await GetMetaSites();
+        await Promise.all(sites.map(site => updateMetaSite(site)))
+        await session.client.setAsync('site:last-fetch-date', time.now)
     }
+    return Promise.resolve()
 });
 async function updateMetaSite(site){
     await session.client.saddAsync('sites', site.api_site_parameter);
