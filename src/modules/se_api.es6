@@ -1,6 +1,7 @@
 import { HtmlRequest, JsonRequest } from './request'
 import { Time } from './time'
 import querystring from 'querystring';
+import sleep from 'sleep';
 
 async function SiteNameToApiFormat(sitename){
     sitename = sitename.toLowerCase();
@@ -42,6 +43,10 @@ async function fetchUntilEnd(options, iteration){
             url.queryStrings.pagesize = url.queryStrings.pagesize || 100;
             options.url = url.generate()
             let result = await JsonRequest(options);
+            if (result.backoff){
+                await sleep.sleep(60)
+            }
+            await sleep.sleep(4)
             console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
             items = Array.concat(items, result.items)
             hasMore = result.hasOwnProperty('has_more') ? result.has_more : false
@@ -54,16 +59,13 @@ async function fetchUntilEnd(options, iteration){
 async function fetchOnce(options, iteration){
     try {
         var queryStrings = querystring.parse('');
-        var url = options.url;
-        if (options.url.split('?').length > 1){
-            queryStrings = querystring.parse(options.url.split('?')[1])
-            url = options.url.split('?')[0]
-        }
+        var url = Url(options.url);
         url.queryStrings.key = "zDO2gMEs69ZZpSZRjl6LFw((";
-        queryStrings.pagesize = 100
-        options.url = `${url}?${querystring.stringify(queryStrings) || 1}`
+        url.queryStrings.pagesize = 100
+        options.url = url.generate()
         let result = await JsonRequest(options)
-        return Promise.resolve(result);
+        await sleep.sleep(4)
+        return Promise.resolve(result.items);
     } catch(error){
         throw error;
     }
@@ -95,12 +97,11 @@ async function GetPostsFromMeta(sitename, modifiedDate){
         method: 'GET'
     }
     try {
-        let posts = await fetchOnce(options)
+        let posts = await fetchUntilEnd(options)
         console.log(` - Grabbed ${posts.length} posts from ${sitename}`)
         return Promise.resolve(posts)
-        return Promise.reject()
     } catch (error){
-        return Promise.reject()
+        return Promise.reject(error)
     }
 }
 
