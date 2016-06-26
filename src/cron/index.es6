@@ -64,6 +64,7 @@ async function updatePost(site, post){
             "answer_count"
         )
         addDataPair({
+            'site': site,
             'tags': JSON.stringify(post.tags),
             'owner:ismoderator': post.owner.user_type == "moderator",
             'owner:name': post.owner.display_name,
