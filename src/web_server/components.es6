@@ -3,7 +3,9 @@
     so we can import and deal with em together.
 */
 import ListItem from './components/list_item.jsx'
+import List from './components/list.jsx'
 
-export const Components = {
-    ListItem: ListItem
+export {
+    List,
+    ListItem
 }
