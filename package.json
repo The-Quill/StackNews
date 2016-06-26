@@ -30,6 +30,7 @@
     "babel-plugin-transform-regenerator": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "moment": "^2.13.0",
-    "request-promise": "^3.0.0"
+    "request-promise": "^3.0.0",
+    "sleep": "^3.0.1"
   }
 }
