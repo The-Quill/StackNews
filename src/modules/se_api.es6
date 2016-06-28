@@ -48,6 +48,7 @@ async function fetchUntilEnd(options, iteration){
                 console.log(`Backoff received, waiting ${result.backoff} seconds`)
                 await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
+                console.log(`returning from backoff`);
             }
             await sleep.sleep(4)
             items = Array.concat(items, result.items)
