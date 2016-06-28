@@ -36,22 +36,24 @@ async function fetchUntilEnd(options, iteration){
         var generatePageVar = () => pageNumber++
         var hasMore = true;
         var i = 0;
+        var result;
         while (hasMore){
             var url = Url(options.url);
             url.queryStrings.key = "zDO2gMEs69ZZpSZRjl6LFw((";
             url.queryStrings.page = generatePageVar()
             url.queryStrings.pagesize = url.queryStrings.pagesize || 100;
             options.url = url.generate()
-            let result = await JsonRequest(options);
+            result = await JsonRequest(options);
             if (result.hasOwnProperty('backoff')){
+                console.log(`Backoff received, waiting ${result.backoff} seconds`)
                 await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
             }
             await sleep.sleep(4)
-            console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
             items = Array.concat(items, result.items)
             hasMore = result.hasOwnProperty('has_more') ? result.has_more : false
         }
+        console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
         return Promise.resolve(items)
     } catch (error){
         throw error;
