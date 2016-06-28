@@ -1,5 +1,6 @@
 import request from 'request-promise'
 import dom from 'cheerio'
+import errors from 'request-promise/errors'
 
 async function Request(options){
     let defaultOptions = {
@@ -9,7 +10,12 @@ async function Request(options){
         (resolve, reject) => {
             request(Object.assign(defaultOptions, options))
             .then(data => resolve(data))
-            .error(error => reject(error))
+            .catch(errors.StatusCodeError, function (reason) {
+                console.log(`oh shit, the server responded with a ${reason.statusCode}. you messed up dude.`)
+            })
+            .catch(errors.RequestError, function (reason) {
+                reject(`Shoddy options provided. URL was ${options.url} and reason was ${reason.cause}`)
+            });
         }
     );
 }
