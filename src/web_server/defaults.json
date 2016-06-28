@@ -1,0 +1,9 @@
+{
+    "website_name": "StackNews",
+    "stylesheets": [
+        {
+            "src": "abc.css"
+        }
+    ],
+    "scripts": []
+}

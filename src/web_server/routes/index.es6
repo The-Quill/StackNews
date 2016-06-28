@@ -30,7 +30,9 @@ let IndexRoute = function(req, res){
             'title': 'Test'
         }
     ]
-    res.render('index', { items: items });
+    res.render('index', {
+        items: items,
+    });
 };
 
 export { IndexRoute as default }

@@ -1,11 +1,16 @@
 import React from 'react'
-import { List } from '../components.es6'
+import { Head, Header, List, Footer } from '../components.es6'
 
 var Index = React.createClass({
     render(){
-        return <div>
-            <List items={this.props.items}></List>
-        </div>
+        return <html>
+            <Head></Head>
+            <body>
+                <Header></Header>
+                <List items={this.props.items}></List>
+                <Footer></Footer>
+            </body>
+        </html>
     }
 })
 
