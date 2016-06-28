@@ -12,7 +12,8 @@ session.client.getAsync('site:last-fetch-date')
         await Promise.all(sites.map(site => updateMetaSite(site)))
         await session.client.setAsync('site:last-fetch-date', time.now)
     }
-    return Promise.resolve()
+    console.log(`Finishing job.`)
+    process.exit()
 });
 async function updateMetaSite(site){
     await session.client.saddAsync('sites', site.api_site_parameter);

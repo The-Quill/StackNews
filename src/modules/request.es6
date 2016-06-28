@@ -8,6 +8,7 @@ async function Request(options){
     }
     return new Promise(
         (resolve, reject) => {
+            //console.log(`Fetching data from ${options.url}`)
             request(Object.assign(defaultOptions, options))
             .then(data => resolve(data))
             .catch(errors.StatusCodeError, function (reason) {

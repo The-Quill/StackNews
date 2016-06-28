@@ -16,7 +16,8 @@ session.client.getAsync('post:last-fetch-date')
             })
         )
         session.client.setAsync('post:last-fetch-date', time.now)
-        return Promise.resolve()
+        console.log(`Finishing job.`)
+        process.exit()
     } else {
         // do last modified magic here
         //
@@ -24,16 +25,18 @@ session.client.getAsync('post:last-fetch-date')
         await Promise.all(
             sites.map(async function(site){
                 let posts = await GetPostsFromSite(site, res)
+                posts.forEach(post => console.log(` - ${post.title}`))
                 return posts.map(post => updatePost(site, post))
             })
         )
         session.client.setAsync('post:last-fetch-date', time.now)
-        return Promise.resolve()
+        console.log(`Finishing job.`)
+        process.exit()
     }
 });
 async function updatePost(site, post){
     try {
-        await session.client.saddAsync('posts', `${site}:${post.question_id}`);
+        await session.client.zaddAsync('posts', post.last_activity_date, `${site}:${post.question_id}`);
         await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
         const postKey = `post:${site}:${post.question_id}`;
         var data = []

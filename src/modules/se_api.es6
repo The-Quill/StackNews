@@ -98,7 +98,8 @@ async function GetMetaSites(){
         return Promise.reject()
     }
 }
-async function GetPostsFromSite(sitename, modifiedDate){
+async function GetPostsFromSite(sitename, since){
+    let modifiedDate = Math.floor(since / 1000)
     var options = {
         url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!gB57Fc-gHH5vhESOcDSS28xXhsx8UxMt5CF&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
         method: 'GET'
