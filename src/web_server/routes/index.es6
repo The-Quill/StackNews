@@ -1,4 +1,4 @@
-import { RedisSession } from '../../modules/redis'
+import { RedisSession } from '../../modules/redis.es6'
 // async function getPosts(){
 //     return await getPostsOrSomething();
 // }
