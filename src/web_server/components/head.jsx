@@ -7,6 +7,8 @@ const Head = React.createClass({
             <title>{Defaults.website_name}</title>
             {
                 Defaults.stylesheets.map((file, key) => <link href={file.src} key={key} />)
+            }
+            {
                 Defaults.scripts.map((file, key)     => <script src={file.src} key={key} />)
             }
         </head>
