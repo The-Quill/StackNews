@@ -45,7 +45,7 @@ async function fetchUntilEnd(options, iteration){
             options.url = url.generate()
             result = await JsonRequest(options);
             if (result.hasOwnProperty('backoff')){
-                console.log(`Backoff received, waiting ${result.backoff} seconds`)
+                console.log(`Backoff received trying to access ${url.queryStrings.site}, waiting ${result.backoff} seconds`)
                 await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
                 console.log(`returning from backoff`);
@@ -57,7 +57,7 @@ async function fetchUntilEnd(options, iteration){
         console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
         return Promise.resolve(items)
     } catch (error){
-        throw error;
+        console.error(error);
     }
 }
 async function fetchOnce(options, iteration){

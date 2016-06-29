@@ -29,7 +29,7 @@ session.client.getAsync('post:last-fetch-date')
                 return posts.map(post => updatePost(site, post))
             })
         )
-        session.client.setAsync('post:last-fetch-date', time.now)
+        await session.client.setAsync('post:last-fetch-date', time.now)
         console.log(`Finishing job.`)
         process.exit()
     }

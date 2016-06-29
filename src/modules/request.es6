@@ -15,6 +15,9 @@ async function Request(options){
                 console.log(`oh shit, the server responded with a ${reason.statusCode}. you messed up dude.`)
             })
             .catch(errors.RequestError, function (reason) {
+                if (reason.cause === "Error: socket hang up" || reason.cause === "Error: read ECONNRESET"){
+                    resolve(Request(options))
+                }
                 reject(`Shoddy options provided. URL was ${options.url} and reason was ${reason.cause}`)
             });
         }
