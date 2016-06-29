@@ -1,4 +1,7 @@
 import { RedisSession } from '../../modules/redis.es6'
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import Application from '../views/index.jsx'
 // async function getPosts(){
 //     return await getPostsOrSomething();
 // }
@@ -30,9 +33,10 @@ let IndexRoute = function(req, res){
             'title': 'Test'
         }
     ]
-    res.render('index', {
-        items: items,
-    });
+    // const { path } = req
+    const app = <Application items={items} />
+    res.write(renderToString(app))
+    res.end()
 };
 
 export { IndexRoute as default }

@@ -14,7 +14,7 @@ app.set('views', path.resolve(__dirname, 'src/web_server/views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
-app.get('/', IndexRoute);
+app.use('/', IndexRoute);
 
 //Route not found -- Set 404
 app.get('*', function(req, res) {

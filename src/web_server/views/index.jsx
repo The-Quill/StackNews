@@ -1,8 +1,8 @@
 import React from 'react'
 import { Head, Header, List, Footer } from '../components.es6'
-import styles from '../css_modules/body'
+import styles from '../css_modules/body.css'
 
-var Index = React.createClass({
+var Application = React.createClass({
     render(){
         return <html>
             <Head></Head>
@@ -15,4 +15,4 @@ var Index = React.createClass({
     }
 })
 
-export { Index as default }
+export { Application as default }
