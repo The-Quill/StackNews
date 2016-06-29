@@ -1,22 +1,29 @@
 var path = require("path");
 var webpack = require('webpack');
+var nodeExternals = require('webpack-node-externals');
 
 var commonLoaders = [
     { test: /\.js$/, loader: "jsx-loader" },
     { test: /\.png$/, loader: "url-loader" },
     { test: /\.jpg$/, loader: "file-loader" },
+    { test: /\.json$/, loader: "json-loader" },
 ];
 var assetsPath = path.join(__dirname, "public", "assets");
 var publicPath = "assets/";
 
-module.exports = [
+module.exports = {
     entry: [
-        'webpack-dev-server/client?http://0.0.0.0:3000', // WebpackDevServer host and port
-        'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
-        './scripts/index' // Your appʼs entry point
+        './src/web_server/render.es6' // Your appʼs entry point
     ],
+    output: {
+        path: __dirname,
+        filename: "dist/bundle.js"
+    },
+    target: 'node',
+    externals: [nodeExternals()],
     module: {
         loaders: [
+            ...commonLoaders,
             {
                 test: /\.jsx?$/,
                 loaders: [
@@ -25,7 +32,7 @@ module.exports = [
                     'babel-loader',
                     'jsx-loader'
                 ],
-                include: path.join(__dirname, 'src/components')
+                include: path.join(__dirname, 'src')
             },
             {
                 test: /\.es6?$/,
@@ -35,10 +42,19 @@ module.exports = [
                     'babel-loader'
                 ],
                 include: path.join(__dirname, 'src')
-            }
+            },
+            {
+                test: /\.scss$/,
+                loaders: [
+                    'isomorphic-style-loader',
+                    'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:3]',
+                    'postcss-loader'
+                ],
+                include: path.join(__dirname, 'src/css_modules')
+            },
         ]
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ]
-];
+};
