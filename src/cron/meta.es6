@@ -8,6 +8,7 @@ const time    = new Time();
 session.client.getAsync('site:last-fetch-date')
 .then(async function(res, reply) {
     if (reply === null || time.weekOlder(res)){
+        console.log(`fetching new site list`)
         let sites = await GetMetaSites();
         await Promise.all(sites.map(site => updateMetaSite(site)))
         await session.client.setAsync('site:last-fetch-date', time.now)
@@ -29,6 +30,7 @@ async function updateMetaSite(site){
     addData(
         "high_resolution_icon_url",
         "icon_url",
+        "site_url",
         "favicon_url",
         "logo_url",
         "api_site_parameter",
