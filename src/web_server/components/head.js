@@ -11,6 +11,7 @@ class Head extends React.Component {
             {
                 Defaults.scripts.map((file, key)     => <script src={file.src} key={key} />)
             }
+            <meta charSet="utf-8" />
         </head>
     }
 }
