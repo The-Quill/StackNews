@@ -2,9 +2,11 @@
   "name": "stack-news",
   "version": "1.0.0",
   "description": "A platform for viewing the new Meta posts from Stack Exchange.",
-  "main": "index.js",
+  "main": "dist/web_server/index.js",
   "scripts": {
-    "dev_server": "webpack-dev-server --progress --profile --colors --hot"
+    "start_server": "./node_modules/.bin/forever start dist/web_server/index.js",
+    "build": "grunt",
+    "first": "grunt && npm run start_server"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,7 @@
   "dependencies": {
     "cheerio": "^0.20.0",
     "express": "^4.14.0",
-    "express-react-views": "^0.10.2",
+    "forever": "^0.15.2",
     "node-jsx": "^0.13.3",
     "path": "^0.12.7",
     "react": "^15.1.0",
@@ -31,25 +33,21 @@
     "babel-cli": "^6.10.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-css-modules-transform": "^0.1.1",
+    "babel-plugin-react-css-modules": "0.0.0",
     "babel-plugin-syntax-async-functions": "^6.8.0",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-plugin-transform-class-properties": "^6.10.2",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-plugin-transform-regenerator": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
-    "css-loader": "^0.23.1",
-    "file-loader": "^0.9.0",
-    "isomorphic-style-loader": "^1.0.0",
-    "json-loader": "^0.5.4",
-    "json5-loader": "^0.6.0",
-    "jsx-loader": "^0.13.2",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-execute": "^0.2.2",
+    "grunt-sass": "^1.2.0",
+    "load-grunt-tasks": "^3.5.0",
     "moment": "^2.13.0",
-    "react-hot-loader": "^1.3.0",
+    "node-sass": "^3.8.0",
     "request-promise": "^3.0.0",
-    "sleep": "^3.0.1",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-node-externals": "^1.2.0"
+    "sleep": "^3.0.1"
   }
 }
