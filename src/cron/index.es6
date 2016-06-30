@@ -36,7 +36,7 @@ session.client.getAsync('post:last-fetch-date')
 });
 async function updatePost(site, post){
     try {
-        await session.client.zaddAsync('posts', post.last_activity_date, `${site}:${post.question_id}`);
+        await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
         await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
         const postKey = `post:${site}:${post.question_id}`;
         var data = []
