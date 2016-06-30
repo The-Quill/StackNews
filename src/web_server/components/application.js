@@ -1,18 +1,17 @@
 import React from 'react'
-import { Head, Header, List, Footer } from '../components.es6'
-import styles from '../css_modules/body.css'
+import { Head, Header, List, Footer } from '../components'
 
-var Application = React.createClass({
+class Application extends React.Component {
     render(){
         return <html>
             <Head></Head>
-            <body className={styles.body}>
+            <body className={'main'}>
                 <Header></Header>
                 <List items={this.props.items}></List>
                 <Footer></Footer>
             </body>
         </html>
     }
-})
+}
 
-export { Application as default }
+export default Application
