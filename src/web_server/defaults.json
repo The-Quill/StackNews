@@ -2,7 +2,7 @@
     "website_name": "StackNews",
     "stylesheets": [
         {
-            "src": "abc.css"
+            "src": "main.css"
         }
     ],
     "scripts": []
