@@ -2,7 +2,7 @@ import React from 'react'
 
 const ListItem = React.createClass({
     getInitialState(){
-        console.log(this.props.item);
+        //console.log(this.props.item);
         return {}
     },
     render () {
@@ -15,4 +15,4 @@ const ListItem = React.createClass({
     }
 })
 
-export { ListItem as default }
+export default ListItem

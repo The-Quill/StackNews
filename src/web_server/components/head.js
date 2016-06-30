@@ -1,18 +1,18 @@
 import React from 'react'
-import Defaults from '../defaults'
+import Defaults from '../defaults.json'
 
-const Head = React.createClass({
+class Head extends React.Component {
     render(){
         return <head>
             <title>{Defaults.website_name}</title>
             {
-                Defaults.stylesheets.map((file, key) => <link href={file.src} key={key} />)
+                Defaults.stylesheets.map((file, key) => <link href={file.src} rel={"stylesheet"} key={key} />)
             }
             {
                 Defaults.scripts.map((file, key)     => <script src={file.src} key={key} />)
             }
         </head>
     }
-})
+}
 
-export { Head as default }
+export default Head

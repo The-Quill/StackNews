@@ -1,13 +1,13 @@
 import React from 'react'
 import Defaults from '../defaults'
 
-var Header = React.createClass({
+class Footer extends React.Component {
     render(){
-        return <nav>
+        return <footer>
             <img src={Defaults.icon_url} />
             <h1>{Defaults.website_name}</h1>
-        </nav>
+        </footer>
     }
-})
+}
 
-export { Header as default }
+export default Footer

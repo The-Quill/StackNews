@@ -1,18 +1,18 @@
 import React from 'react'
 import ListItem from './list_item'
 
-const List = React.createClass({
+class List extends React.Component {
     render () {
         return (
             <div>
                 {
                     this.props.items.map(
-                        item => <ListItem item={item}></ListItem>
+                        (item, index) => <ListItem item={item} key={index}></ListItem>
                     )
                 }
             </div>
         )
     }
-})
+}
 
-export { List as default }
+export default List
