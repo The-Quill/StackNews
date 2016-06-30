@@ -20,6 +20,7 @@ let IndexRoute = function(req, res){
         var posts = []
         for (var i = 0; i < itemKeys.length; i++){
             let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
+            post.site = await session.client.hgetallAsync(`site:${post.site}`)
             posts.push(post)
         }
         let app = <Application items={posts.reverse()} />
