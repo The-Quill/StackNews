@@ -1,12 +1,11 @@
 {
     "presets": [
-      "es2015"
-   ],
-   "plugins": [
-       "syntax-async-functions",
-       "transform-regenerator",
-       "transform-async-to-generator",
-       "transform-react-jsx",
-       "css-modules-transform"
-   ]
+        "es2015"
+    ],
+    "plugins": [
+        "syntax-async-functions",
+        "transform-regenerator",
+        "transform-async-to-generator",
+        "transform-react-jsx"
+    ]
 }
