@@ -58,6 +58,7 @@ async function fetchUntilEnd(options, iteration){
         return Promise.resolve(items)
     } catch (error){
         console.error(error);
+        return Promise.reject(error);
     }
 }
 async function fetchOnce(options, iteration){
