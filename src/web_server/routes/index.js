@@ -1,7 +1,7 @@
-import { RedisSession } from '../../modules/redis.es6'
+import { RedisSession } from '../../modules/redis'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import Application from '../views/index.jsx'
+import { Application } from '../components'
 // async function getPosts(){
 //     return await getPostsOrSomething();
 // }
