@@ -5,7 +5,7 @@ class Footer extends React.Component {
     render(){
         return <footer>
             <img src={Defaults.icon_url} />
-            <h1>{Defaults.website_name}</h1>
+            <p>{Defaults.website_name}</p>
         </footer>
     }
 }
