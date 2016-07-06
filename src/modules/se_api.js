@@ -1,4 +1,5 @@
 import { HtmlRequest, JsonRequest } from './request'
+import { RedisSession } from './redis'
 import { Time } from './time'
 import querystring from 'querystring';
 import sleep from 'sleep';
@@ -116,6 +117,7 @@ async function GetPostsFromSite(sitename, since){
 async function FetchPosts(offsetMultiplier, perPage){
     // count
     // zrangebyscore posts -inf +inf LIMIT 50000 10
+    let session = new RedisSession();
     let count = await session.client.zcardAsync('posts')
     let offset = (offsetMultiplier === 0 ? 1 : offsetMultiplier) * perPage
     let fetch = count - offset
