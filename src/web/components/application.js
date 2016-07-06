@@ -7,11 +7,12 @@ class Application extends React.Component {
             <Head></Head>
             <body className={'main'}>
                 <Header></Header>
-                <List items={this.props.items}></List>
+                <List items={this.props.items || []}></List>
                 <Footer></Footer>
             </body>
         </html>
     }
 }
+
 
 export default Application

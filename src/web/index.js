@@ -5,6 +5,7 @@ import IndexRoute from './routes/index'
 import CssRoute from './routes/css'
 import CssMapRoute from './routes/cssmap'
 import ImageRoute from './routes/image'
+import TtfRoute from './routes/ttf'
 
 const app = express()
 let port = 4444
@@ -13,6 +14,7 @@ app.get('/', IndexRoute);
 app.get('/[a-zA-Z]+.png', ImageRoute);
 app.get('/[a-zA-Z]+.css', CssRoute);
 app.get('/[a-zA-Z]+.css.map', CssMapRoute);
+app.get('/[a-zA-Z]+.ttf', TtfRoute);
 
 //Route not found -- Set 404
 app.get('*', function(req, res) {

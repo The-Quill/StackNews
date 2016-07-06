@@ -3,6 +3,9 @@
     "stylesheets": [
         {
             "src": "main.css"
+        },
+        {
+            "src": "https://fonts.googleapis.com/css?family=Raleway"
         }
     ],
     "scripts": []

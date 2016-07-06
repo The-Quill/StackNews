@@ -3,6 +3,10 @@ $list-item-color: #57BC90;
 $moderator-item-color: #DF744A;
 $text-color-list-item: white;
 $font-family: helvetica;
+@font-face {
+    font-family: "peach-sundress";
+    src: url("PeachSundress.ttf");
+}
 
 @import 'scss/body.scss';
 @import 'scss/list.scss';
