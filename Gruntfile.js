@@ -16,7 +16,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'src',
-                        src: ['web_server/**/*.js', 'web_server/**/*.js'],
+                        src: ['web/**/*.js', 'web/**/*.js'],
                         dest: 'dist/',
                         ext: '.js'
                     },
@@ -33,14 +33,14 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, cwd: 'src', src: ['web_server/*.json'], dest: 'dist/'},
-                    {expand: true, cwd: 'src', src: ['web_server/resources/*.*'], dest: 'dist/'}
+                    {expand: true, cwd: 'src', src: ['web/*.json'], dest: 'dist/'},
+                    {expand: true, cwd: 'src', src: ['web/resources/*.*'], dest: 'dist/'}
                 ]
             }
         },
         watch: {
            sass: {
-               files: ['src/web_server/**/*.{scss,sass}'],
+               files: ['src/web/**/*.{scss,sass}'],
                tasks: ['sass:dev']
            }
        },
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                     outputStyle: 'compressed'
                 },
                 files: {
-                    'dist/web_server/scss/out.css': 'src/web_server/components.scss'
+                    'dist/web/scss/out.css': 'src/web/components.scss'
                 }
             }
         }
