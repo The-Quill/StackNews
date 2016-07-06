@@ -113,5 +113,13 @@ async function GetPostsFromSite(sitename, since){
         return Promise.reject(error)
     }
 }
+async function FetchPosts(offsetMultiplier, perPage){
+    // count
+    // zrangebyscore posts -inf +inf LIMIT 50000 10
+    let count = await session.client.zcardAsync('posts')
+    let offset = (offsetMultiplier === 0 ? 1 : offsetMultiplier) * perPage
+    let fetch = count - offset
+    return session.client.zrangebyscoreAsync(['posts', '-inf', '+inf', 'LIMIT', `${fetch}`, `${perPage}`])
+}
 
-export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, Url, is }
+export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, FetchPosts, Url, is }
