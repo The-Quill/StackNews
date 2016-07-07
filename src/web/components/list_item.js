@@ -12,9 +12,6 @@ const ListItem = React.createClass({
         return (
             <div className={`list-item ${this.props.item['owner:ismoderator'] ? 'moderatorPost' : ''}`}>
                 <div>
-                    <span className="score">
-                        {this.props.item.score || 0}
-                    </span>
                     <img className="site-icon" src={this.props.item.site.icon_url} />
                     <a target="_blank" href={
                         `${this.props.item.site['site_url']}/q/${this.props.item.question_id}`
