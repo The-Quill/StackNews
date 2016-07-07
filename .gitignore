@@ -40,3 +40,7 @@ redis.json
 
 bin/*
 dist/*
+
+dump.rdb
+
+*.txt
