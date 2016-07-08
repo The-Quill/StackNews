@@ -8,5 +8,16 @@
             "src": "https://fonts.googleapis.com/css?family=Raleway"
         }
     ],
-    "scripts": []
+    "scripts": [],
+    "allowedFileExtensions": [
+        "css",
+        "css.map",
+        "ttf"
+    ],
+    "bannedFileExtensions": [
+        "php",
+        "json",
+        "config",
+        "js"
+    ]
 }
