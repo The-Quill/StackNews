@@ -30,8 +30,11 @@ const is = {
     Meta: name => { return name.toLowerCase().includes('meta') },
     Main: name => { return name.toLowerCase() != "meta stack exchange" && !name.toLowerCase().includes('meta') }
 }
-async function fetchUntilEnd(options, iteration){
+async function fetchUntilEnd(options = {}){
     var items = []
+    if (!options.hasOwnProperty('url')){
+        throw new Error('Url not provided')
+    }
     try {
         let pageNumber = 1
         var generatePageVar = () => pageNumber++
@@ -58,11 +61,11 @@ async function fetchUntilEnd(options, iteration){
         console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
         return Promise.resolve(items)
     } catch (error){
-        console.error(error);
+        console.error(`api: ${error}`);
         return Promise.reject(error);
     }
 }
-async function fetchOnce(options, iteration){
+async function fetchOnce(options = {}){
     try {
         var queryStrings = querystring.parse('');
         var url = Url(options.url);
@@ -100,7 +103,7 @@ async function GetMetaSites(){
         return Promise.reject()
     }
 }
-async function GetPostsFromSite(sitename, since){
+async function GetPostsFromSite(sitename = 'meta', since = '0'){
     let modifiedDate = Math.floor(since / 1000)
     var options = {
         url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!gB57Fc-gHH5vhESOcDSS28xXhsx8UxMt5CF&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
@@ -114,7 +117,7 @@ async function GetPostsFromSite(sitename, since){
         return Promise.reject(error)
     }
 }
-async function FetchPosts(offsetMultiplier, perPage){
+async function FetchPosts(offsetMultiplier = 1, perPage = 30){
     // count
     // zrangebyscore posts -inf +inf LIMIT 50000 10
     let session = new RedisSession();
@@ -123,5 +126,16 @@ async function FetchPosts(offsetMultiplier, perPage){
     let fetch = count - offset
     return session.client.zrangebyscoreAsync(['posts', '-inf', '+inf', 'LIMIT', `${fetch}`, `${perPage}`])
 }
+async function LoadNewPosts(page = 1, count = 30){
+    let session = new RedisSession();
+    let itemKeys = await FetchPosts(page, count);
+    var posts = []
+    for (var i = itemKeys.length - 1; i >= 0; i--){
+        let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
+        post.site = await session.client.hgetallAsync(`site:${post.site}`)
+        posts.push(post)
+    }
+    return Promise.resolve(posts)
+}
 
-export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, FetchPosts, Url, is }
+export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, FetchPosts, LoadNewPosts, Url, is }
