@@ -1,8 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import ListItem from './list_item'
 
 class List extends React.Component {
     render () {
+        console.log(`Called list to render`)
+        console.log(this.props)
         return (
             <div className="list">
                 {
@@ -15,4 +18,8 @@ class List extends React.Component {
     }
 }
 
-export default List
+function mapStateToProps(state = {items: []}) {
+    return { items: state }
+}
+
+export default connect(mapStateToProps)(List)

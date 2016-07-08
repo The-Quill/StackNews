@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Head, Header, List, Footer } from '../components'
 
 class Application extends React.Component {
@@ -11,5 +12,8 @@ class Application extends React.Component {
     }
 }
 
+function mapStateToProps(state = {items: []}) {
+    return { items: state }
+}
 
-export default Application
+export default connect(mapStateToProps)(Application)
