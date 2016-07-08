@@ -15,9 +15,6 @@ session.client.getAsync('post:last-fetch-date')
                 return posts.map(post => updatePost(site, post))
             })
         )
-        session.client.setAsync('post:last-fetch-date', time.now)
-        console.log(`Finishing job.`)
-        process.exit()
     } else {
         // do last modified magic here
         //
@@ -29,10 +26,10 @@ session.client.getAsync('post:last-fetch-date')
                 return posts.map(post => updatePost(site, post))
             })
         )
-        await session.client.setAsync('post:last-fetch-date', time.now)
-        console.log(`Finishing job.`)
-        process.exit()
     }
+    await session.client.setAsync('post:last-fetch-date', time.now)
+    console.log(`Finishing job.`)
+    process.exit()
 });
 async function updatePost(site, post){
     try {
