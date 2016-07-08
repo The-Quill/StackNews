@@ -12,6 +12,8 @@ const PostsReducer = (state = [], action) => {
                 ...state.slice(action.index + 1)
             ]
             break;
+        case "@@redux/INIT":
+            return [];
         default:
             return [
                 ...state
