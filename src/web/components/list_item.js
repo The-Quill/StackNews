@@ -20,7 +20,7 @@ const ListItem = React.createClass({
                     </a>
                 </div>
                 <div>
-                    <span>  posted by {this.props.item['owner:name']}</span>
+                    <span>  posted by {entities.decode(this.props.item['owner:name'])}</span>
                     <img className="user-icon" src={this.props.item['owner:image']} />
                 </div>
             </div>
