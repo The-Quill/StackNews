@@ -26,7 +26,6 @@ store.subscribe(() => {
 })
 function addPosts(data){
     let posts = data.posts;
-    console.log(posts)
     posts.forEach(post => store.dispatch(
         {
             type: "ADD_POST",
