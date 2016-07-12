@@ -127,11 +127,17 @@ async function FetchPosts(offsetMultiplier = 1, perPage = 30){
     return session.client.zrangebyscoreAsync(['posts', '-inf', '+inf', 'LIMIT', `${fetch}`, `${perPage}`])
 }
 async function LoadNewPosts(page = 1, count = 30){
+    // command for clearing redis keys:
+    // EVAL "local keys = redis.call('keys', ARGV[1]) \n for i=1,#keys,5000 do \n redis.call('del', unpack(keys, i, math.min(i+4999, #keys))) \n end \n return keys" 0 post:*
     let session = new RedisSession();
     let itemKeys = await FetchPosts(page, count);
     var posts = []
     for (var i = itemKeys.length - 1; i >= 0; i--){
         let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
+        if (!post.hasOwnProperty('site')){
+            console.error('site property not found on post')
+            continue;
+        }
         post.site = await session.client.hgetallAsync(`site:${post.site}`)
         posts.push(post)
     }
