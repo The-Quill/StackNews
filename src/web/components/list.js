@@ -4,8 +4,6 @@ import ListItem from './list_item'
 
 class List extends React.Component {
     render () {
-        console.log(`Called list to render`)
-        console.log(this.props)
         return (
             <div className="list">
                 {
