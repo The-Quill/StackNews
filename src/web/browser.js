@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import 'whatwg-fetch';
 window.React = React
 
+var currentlyLoading = false;
 var currentPage = 1;
 var store = createStore(PostsReducer)
 ReactDOM.render(
@@ -32,19 +33,21 @@ function addPosts(data){
             data: post
         }
     ))
+    currentlyLoading = false;
 }
 function getNew(){
+    currentlyLoading = true;
     fetch(`/data/${currentPage++}`)
     .then(response => response.json().then(addPosts))
 }
 window.addEventListener('scroll', function(event){
-    console.log(`scroll`)
     var element = event.target;
     if (element.scrollHeight == null){
         element = element.scrollingElement;
     }
     let percentScrolled = (element.scrollTop / element.clientHeight) * 100;
-    if (percentScrolled > 70){
+    if (percentScrolled > 87 && !currentlyLoading){
+        console.log(percentScrolled)
         getNew()
     }
 });
