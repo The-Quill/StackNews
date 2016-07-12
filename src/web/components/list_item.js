@@ -9,18 +9,21 @@ const ListItem = React.createClass({
         return {}
     },
     render () {
+        console.log(this.props.item)
         return (
             <div className={`list-item ${this.props.item['owner:ismoderator'] ? 'moderatorPost' : ''}`}>
-                <div>
+                <div className={`post-details`}>
                     <img className="site-icon" src={this.props.item.site.icon_url} />
-                    <a target="_blank" href={
-                        `${this.props.item.site['site_url']}/q/${this.props.item.question_id}`
-                    } className="content">
-                        {entities.decode(this.props.item.title)}
-                    </a>
+                    <span>
+                        <a target="_blank" href={
+                            `${this.props.item.site['site_url']}/q/${this.props.item.question_id}`
+                        } className="content">
+                            {entities.decode(this.props.item.title)}
+                        </a>
+                    </span>
                 </div>
-                <div>
-                    <span>  posted by {entities.decode(this.props.item['owner:name'])}</span>
+                <div className={`user-details`}>
+                    <a href={this.props.item['owner:link']}>{entities.decode(this.props.item['owner:name'])}</a>
                     <img className="user-icon" src={this.props.item['owner:image']} />
                 </div>
             </div>
