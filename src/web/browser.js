@@ -37,8 +37,7 @@ function getNew(){
     fetch(`/data/${currentPage++}`)
     .then(response => response.json().then(addPosts))
 }
-window.addEventListener('scroll', function(event)
-{
+window.addEventListener('scroll', function(event){
     console.log(`scroll`)
     var element = event.target;
     if (element.scrollHeight == null){
