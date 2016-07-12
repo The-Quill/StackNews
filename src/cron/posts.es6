@@ -40,6 +40,9 @@ async function updatePost(site, post){
         let addData = (...keys) => {
             keys.forEach(key => {
                 if (key == null) return
+                let value = post[key] === null || post[key] === undefined
+                    ? ""
+                    : post[key]
                 data.push(key)
                 data.push(post[key] || "")
             });
@@ -47,8 +50,11 @@ async function updatePost(site, post){
         let addDataPair = (values) => {
             Object.keys(values).forEach(key => {
                 if (key == null) return
+                let value = values[key] === null || values[key] === undefined
+                    ? ""
+                    : values[key]
                 data.push(key)
-                data.push(values[key] || "")
+                data.push(value)
             })
         }
         addData(
@@ -71,8 +77,10 @@ async function updatePost(site, post){
             'owner:id': post.owner.user_id,
             'owner:image': post.owner.profile_image
         });
+        data.forEach(item => item === undefined ? throw new Error('data point was undefined') : '')
         return session.client.hmsetAsync([postKey, ...data])
     } catch (error){
+        console.error(error)
         return Promise.reject(error);
     }
 }
