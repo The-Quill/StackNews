@@ -42,6 +42,7 @@
         background-color: white;
     }
     .site-icon {
+        float: left;
         display: inline;
         width: 30px;
         height: 30px;
@@ -51,10 +52,23 @@
         display: inline;
         width: 25px;
         height: 25px;
+        margin-left: 7px;
         margin-right: 10px;
     }
     .score {
         font-weight: bold;
+    }
+    .user-details {
+        float: right;
+        span {
+            @include vertical-align()
+        }
+    }
+    .post-details {
+        float: left;
+        span {
+            @include vertical-align()
+        }
     }
     .moderatorPost {
         background-color: $moderator-item-color;
