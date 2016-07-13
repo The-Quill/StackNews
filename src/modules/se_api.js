@@ -106,7 +106,7 @@ async function GetMetaSites(){
 async function GetPostsFromSite(sitename = 'meta', since = '0'){
     let modifiedDate = Math.floor(since / 1000)
     var options = {
-        url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!gB57Fc-gHH5vhESOcDSS28xXhsx8UxMt5CF&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
+        url: `https://api.stackexchange.com/2.2/questions?order=desc&filter=!5-dZV)n_-6pWsxU4YKPc4_ZV6Bvs)LtKUoUxbH&sort=activity&site=${sitename}${modifiedDate ? `&min=${modifiedDate}` : ''}`,
         method: 'GET'
     }
     try {
@@ -134,7 +134,7 @@ async function LoadNewPosts(page = 1, count = 30){
     var posts = []
     for (var i = itemKeys.length - 1; i >= 0; i--){
         let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
-        if (!post.hasOwnProperty('site')){
+        if (!post.hasOwnProperty('site') || post.site == ""){
             console.error('site property not found on post')
             continue;
         }
