@@ -29,12 +29,12 @@ async function HtmlRequest(options){
             return dom.load(body);
         }
     }
-    return await Request(Object.assign(options, defaultOptions))
+    return Request(Object.assign(options, defaultOptions))
 }
 async function JsonRequest(options){
     let defaultOptions = {
         json: true
     }
-    return await Request(Object.assign(options, defaultOptions))
+    return Request(Object.assign(options, defaultOptions))
 }
 export { HtmlRequest, JsonRequest }
