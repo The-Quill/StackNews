@@ -44,7 +44,7 @@ async function updatePost(site, post){
                     ? ""
                     : post[key]
                 data.push(key)
-                data.push(post[key] || "")
+                data.push(value)
             });
         }
         let addDataPair = (values) => {
@@ -67,7 +67,8 @@ async function updatePost(site, post){
             "creation_date",
             "is_answered",
             "accepted_answer_id",
-            "answer_count"
+            "answer_count",
+            "share_link"
         )
         addDataPair({
             'site': site,
@@ -75,9 +76,14 @@ async function updatePost(site, post){
             'owner:ismoderator': post.owner.user_type == "moderator",
             'owner:name': post.owner.display_name,
             'owner:id': post.owner.user_id,
-            'owner:image': post.owner.profile_image
+            'owner:image': post.owner.profile_image,
+            'owner:link': post.owner.link
         });
-        data.forEach(item => item === undefined ? throw new Error('data point was undefined') : '')
+        data.forEach(item => {
+            if (item === undefined){
+                throw new Error('data point was undefined')
+            }
+        })
         return session.client.hmsetAsync([postKey, ...data])
     } catch (error){
         console.error(error)
