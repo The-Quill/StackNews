@@ -9,7 +9,6 @@ const ListItem = React.createClass({
         return {}
     },
     render () {
-        console.log(this.props.item)
         return (
             <div className={`list-item ${this.props.item['owner:ismoderator'] ? 'moderatorPost' : ''}`}>
                 <div className={`post-details`}>
