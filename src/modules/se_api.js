@@ -143,7 +143,7 @@ async function LoadNewPosts(page = 1, count = 30){
             'meta.ru.stackoverflow',
             'meta.ja.stackoverflow'
         ]
-        if (noShowSites.contains(post.site)){
+        if (noShowSites.includes(post.site)){
             continue;
         }
         post.site = await session.client.hgetallAsync(`site:${post.site}`)
