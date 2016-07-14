@@ -33,8 +33,6 @@ session.client.getAsync('post:last-fetch-date')
 });
 async function updatePost(site, post){
     try {
-        await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
-        await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
         const postKey = `post:${site}:${post.question_id}`;
         var data = []
         let addData = (...keys) => {
@@ -84,7 +82,9 @@ async function updatePost(site, post){
                 throw new Error('data point was undefined')
             }
         })
-        return session.client.hmsetAsync([postKey, ...data])
+        await session.client.hmsetAsync([postKey, ...data])
+        await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
+        return session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
     } catch (error){
         console.error(error)
         return Promise.reject(error);
