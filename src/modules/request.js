@@ -18,6 +18,7 @@ async function Request(options){
         } catch(error) {
             await sleep.sleep(60)
             if (attempts > 10){
+                console.error(error)
                 return Promise.reject(error)
             }
         }
