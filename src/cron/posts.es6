@@ -5,32 +5,41 @@ import { Time } from '../modules/time'
 const session = new RedisSession();
 const time    = new Time();
 
-session.client.getAsync('post:last-fetch-date')
-.then(async function(res, reply) {
-    if (reply === null || time.weekOlder(res)){
-        let sites = await session.client.smembersAsync('sites');
-        await Promise.all(
-            sites.map(async function(site){
-                let posts = await GetPostsFromSite(site, null)
-                return posts.map(post => updatePost(site, post))
-            })
-        )
-    } else {
-        // do last modified magic here
-        //
-        let sites = await session.client.smembersAsync('sites');
-        await Promise.all(
-            sites.map(async function(site){
-                let posts = await GetPostsFromSite(site, res)
-                posts.forEach(post => console.log(` - ${post.title}`))
-                return posts.map(post => updatePost(site, post))
-            })
-        )
-    }
-    await session.client.setAsync('post:last-fetch-date', time.now)
-    console.log(`Finishing job.`)
-    process.exit()
-});
+if (process.env.NODE_ENV !== 'production'){
+    require('longjohn');
+}
+
+try {
+    session.client.getAsync('post:last-fetch-date')
+    .then(async function(res, reply) {
+        if (reply === null || time.weekOlder(res)){
+            let sites = await session.client.smembersAsync('sites');
+            await Promise.all(
+                sites.map(async function(site){
+                    let posts = await GetPostsFromSite(site, null)
+                    return posts.map(post => updatePost(site, post))
+                })
+            )
+        } else {
+            // do last modified magic here
+            //
+            let sites = await session.client.smembersAsync('sites');
+            await Promise.all(
+                sites.map(async function(site){
+                    let posts = await GetPostsFromSite(site, res)
+                    posts.forEach(post => console.log(` - ${post.title}`))
+                    return posts.map(post => updatePost(site, post))
+                })
+            )
+        }
+        await session.client.setAsync('post:last-fetch-date', time.now)
+        console.log(`Finishing job.`)
+        process.exit()
+    });
+} catch(error){
+    throw new Error(error)
+}
+
 async function updatePost(site, post){
     try {
         await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
