@@ -129,27 +129,36 @@ async function FetchPosts(offsetMultiplier = 1, perPage = 30){
 async function LoadNewPosts(page = 1, count = 30){
     // command for clearing redis keys:
     // EVAL "local keys = redis.call('keys', ARGV[1]) \n for i=1,#keys,5000 do \n redis.call('del', unpack(keys, i, math.min(i+4999, #keys))) \n end \n return keys" 0 post:*
-    let session = new RedisSession();
-    let itemKeys = await FetchPosts(page, count);
-    var posts = []
-    for (var i = itemKeys.length - 1; i >= 0; i--){
-        let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
-        if (!post.hasOwnProperty('site') || post.site == ""){
-            console.error('site property not found on post')
-            continue;
+    try {
+        let session = new RedisSession();
+        let itemKeys = await FetchPosts(page, count);
+        var posts = []
+        for (var i = itemKeys.length - 1; i >= 0; i--){
+            console.log(`  - hgetall post:${itemKeys[i]} `)
+            let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
+            if (post == null){
+                throw new Error(`value at hgetall post:${itemKeys[i]} was null`)
+            }
+            console.log(`done`)
+            if (!post.hasOwnProperty('site') || post.site == ""){
+                console.error('site property not found on post')
+                continue;
+            }
+            var noShowSites = [
+                'meta.es.stackoverflow',
+                'meta.ru.stackoverflow',
+                'meta.ja.stackoverflow'
+            ]
+            if (noShowSites.includes(post.site)){
+                continue;
+            }
+            post.site = await session.client.hgetallAsync(`site:${post.site}`)
+            posts.push(post)
         }
-        var noShowSites = [
-            'meta.es.stackoverflow',
-            'meta.ru.stackoverflow',
-            'meta.ja.stackoverflow'
-        ]
-        if (noShowSites.includes(post.site)){
-            continue;
-        }
-        post.site = await session.client.hgetallAsync(`site:${post.site}`)
-        posts.push(post)
+        return Promise.resolve(posts)
+    } catch(error) {
+        throw new Error(error)
     }
-    return Promise.resolve(posts)
 }
 
 export { GetMetaSites, GetPostsFromSite, GetSiteList, SiteNameToApiFormat, FetchPosts, LoadNewPosts, Url, is }
