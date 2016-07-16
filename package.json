@@ -51,6 +51,7 @@
     "html-entities": "^1.2.0",
     "json-loader": "^0.5.4",
     "load-grunt-tasks": "^3.5.0",
+    "longjohn": "^0.2.11",
     "moment": "^2.13.0",
     "node-sass": "^3.8.0",
     "request-promise": "^3.0.0",
