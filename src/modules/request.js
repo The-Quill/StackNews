@@ -9,6 +9,7 @@ async function Request(options){
     }
     var isInProgress = true;
     var attempts = 0;
+    var failedAttempts = 0;
     var result;
     while(isInProgress){
         attempts++;
@@ -16,13 +17,15 @@ async function Request(options){
             result = await request(Object.assign(defaultOptions, options))
             isInProgress = false
         } catch(error) {
-            await sleep.sleep(60)
+            failedAttempts = attempts;
+            console.log(`  - Attempt no ${attempts} failed for url ${options.url}`)
             if (attempts > 10){
                 console.error(error)
                 return Promise.reject(error)
             }
         }
     }
+    console.log(`  - Attempt no ${attempts} passed after failing ${failedAttempts} attempts..`)
     return Promise.resolve(result)
 }
 async function HtmlRequest(options){
