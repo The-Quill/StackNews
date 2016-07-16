@@ -61,7 +61,7 @@ async function fetchUntilEnd(options = {}){
         console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
         return Promise.resolve(items)
     } catch (error){
-        console.error(`api: ${error}`);
+        console.error(error);
         return Promise.reject(error);
     }
 }
