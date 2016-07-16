@@ -21,13 +21,13 @@ try {
                 })
             )
         } else {
+            console.log(`Getting updated data...`)
             // do last modified magic here
             //
             let sites = await session.client.smembersAsync('sites');
             await Promise.all(
                 sites.map(async function(site){
                     let posts = await GetPostsFromSite(site, res)
-                    posts.forEach(post => console.log(` - ${post.title}`))
                     return posts.map(post => updatePost(site, post))
                 })
             )
@@ -42,8 +42,6 @@ try {
 
 async function updatePost(site, post){
     try {
-        await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
-        await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
         const postKey = `post:${site}:${post.question_id}`;
         var data = []
         let addData = (...keys) => {
@@ -93,7 +91,9 @@ async function updatePost(site, post){
                 throw new Error('data point was undefined')
             }
         })
-        return session.client.hmsetAsync([postKey, ...data])
+        await session.client.hmsetAsync([postKey, ...data])
+        await session.client.saddAsync(`posts:${site}`, `${post.question_id}`);
+        return session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`);
     } catch (error){
         console.error(error)
         return Promise.reject(error);
