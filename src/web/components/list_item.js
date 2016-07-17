@@ -19,6 +19,9 @@ const ListItem = React.createClass({
                         } className="content">
                             {entities.decode(this.props.item.title)}
                         </a>
+                        {
+                            JSON.parse(this.props.item.tags).map(tag => <span>{tag}</span>)
+                        }
                     </span>
                 </div>
                 <div className={`user-details`}>
