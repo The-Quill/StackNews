@@ -19,9 +19,6 @@ const ListItem = React.createClass({
                         } className="content">
                             {entities.decode(this.props.item.title)}
                         </a>
-                        {
-                            JSON.parse(this.props.item.tags).map((tag, index) => <span key={index}>{tag}</span>)
-                        }
                     </span>
                 </div>
                 <div className={`user-details`}>
@@ -34,3 +31,9 @@ const ListItem = React.createClass({
 })
 
 export default ListItem
+
+// Insert after `div div span`
+// <br></br>
+// {
+//     JSON.parse(this.props.item.tags).map((tag, index) => <span className="tag" key={index}>{tag}</span>)
+// }
