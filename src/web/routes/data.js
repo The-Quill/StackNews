@@ -8,10 +8,10 @@ DataRoute.router = async function(req, res) {
     let count = 30;
     try {
         let posts = await LoadNewPosts(page, count);
+        res.json({ posts: posts });
     } catch(error){
         throw new Error(error);
     }
 
-    res.json({ posts: posts });
 }
 export default DataRoute.router
