@@ -20,7 +20,7 @@ const ListItem = React.createClass({
                             {entities.decode(this.props.item.title)}
                         </a>
                         {
-                            JSON.parse(this.props.item.tags).map(tag => <span>{tag}</span>)
+                            JSON.parse(this.props.item.tags).map((tag, index) => <span key={index}>{tag}</span>)
                         }
                     </span>
                 </div>
