@@ -132,14 +132,12 @@ async function LoadNewPosts(page = 1, count = 30){
     try {
         let session = new RedisSession();
         let itemKeys = await FetchPosts(page, count);
-        var posts = []
+        var posts = [];
         for (var i = itemKeys.length - 1; i >= 0; i--){
-            console.log(`  - hgetall post:${itemKeys[i]} `)
             let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
             if (post == null){
                 throw new Error(`value at hgetall post:${itemKeys[i]} was null`)
             }
-            console.log(`done`)
             if (!post.hasOwnProperty('site') || post.site == ""){
                 console.error('site property not found on post')
                 continue;
@@ -150,6 +148,7 @@ async function LoadNewPosts(page = 1, count = 30){
                 'meta.ja.stackoverflow'
             ]
             if (noShowSites.includes(post.site)){
+                //console.log(`Blocked post found at ${post.site}`)
                 continue;
             }
             post.site = await session.client.hgetallAsync(`site:${post.site}`)
