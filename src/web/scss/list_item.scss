@@ -1,18 +1,3 @@
-.list {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    align-items: center;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-
-}
 .list-item {
     display: -webkit-flex;
     display: flex;
@@ -67,20 +52,22 @@
     }
     .user-details {
         float: right;
-        span {
-            @include vertical-align()
+        a {
+            bottom: 6px;
+            position: relative;
         }
     }
     .post-details {
         float: left;
         span {
-            @include vertical-align()
+            top: 6px;
+            position: relative;
         }
-    }
-    .moderatorPost {
-        background-color: $moderator-item-color;
     }
     p {
         display: inline;
     }
+}
+.moderatorPost {
+    background-color: $moderator-item-color;
 }
