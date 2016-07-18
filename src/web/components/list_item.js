@@ -14,7 +14,7 @@ const ListItem = React.createClass({
                 <div className={`post-details`}>
                     <img className="site-icon" src={this.props.item.site.icon_url} />
                     <span>
-                        <a target="_blank" href={
+                        <a target="_blank" alt={this.props.item.site.name} href={
                             `${this.props.item.site['site_url']}/q/${this.props.item.question_id}`
                         } className="content">
                             {entities.decode(this.props.item.title)}
