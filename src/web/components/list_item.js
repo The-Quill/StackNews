@@ -8,10 +8,11 @@ const ListItem = React.createClass({
         //console.log(this.props.item);
         return {}
     },
-    render () {
+    render () {        //
+        let isModPost = this.props.item['owner:ismoderator'] === 'true'
         return (
-            <div className={`list-item ${this.props.item['owner:ismoderator'] === 'true' ? 'moderatorPost' : ''}`}
-                 title={`This is a post from a ${this.props.item['owner:ismoderator'] === 'true' ? 'moderator' : 'user'}.`}>
+            <div className={`list-item ${isModPost ? 'moderatorPost' : ''}`}
+                 title={`This is a post from a ${isModPost ? 'moderator' : 'user'}.`}>
                 <div className={`post-details`}>
                     <img className="site-icon"
                         src={this.props.item.site.icon_url}
@@ -27,7 +28,7 @@ const ListItem = React.createClass({
                     </span>
                 </div>
                 <div className={`user-details`}>
-                    <a href={this.props.item['owner:link']}>{entities.decode(this.props.item['owner:name'])}</a>
+                    <a href={this.props.item['owner:link']}>{entities.decode(this.props.item['owner:name'])}{isModPost ? '♦' : ''}</a>
                     <img className="user-icon" src={this.props.item['owner:image']} />
                 </div>
             </div>
