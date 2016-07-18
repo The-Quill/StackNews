@@ -81,6 +81,7 @@ async function updatePost(site, post){
             'site': site,
             'tags': JSON.stringify(post.tags),
             'owner:ismoderator': post.owner.user_type == "moderator",
+            'owner:reputation': post.owner.reputation,
             'owner:name': post.owner.display_name,
             'owner:id': post.owner.user_id,
             'owner:image': post.owner.profile_image,
