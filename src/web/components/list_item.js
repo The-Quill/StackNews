@@ -12,9 +12,13 @@ const ListItem = React.createClass({
         return (
             <div className={`list-item ${this.props.item['owner:ismoderator'] === 'true' ? 'moderatorPost' : ''}`}>
                 <div className={`post-details`}>
-                    <img className="site-icon" src={this.props.item.site.icon_url} />
+                    <img className="site-icon"
+                        src={this.props.item.site.icon_url}
+                        title={this.props.item.site.name}
+                        alt={this.props.item.site.name}
+                    />
                     <span>
-                        <a target="_blank" alt={this.props.item.site.name} href={
+                        <a target="_blank" href={
                             `${this.props.item.site['site_url']}/q/${this.props.item.question_id}`
                         } className="content">
                             {entities.decode(this.props.item.title)}
