@@ -10,7 +10,7 @@ const ListItem = React.createClass({
     },
     render () {
         return (
-            <div className={`list-item ${this.props.item['owner:ismoderator'] ? 'moderatorPost' : ''}`}>
+            <div className={`list-item ${this.props.item['owner:ismoderator'] === 'true' ? 'moderatorPost' : ''}`}>
                 <div className={`post-details`}>
                     <img className="site-icon" src={this.props.item.site.icon_url} />
                     <span>
