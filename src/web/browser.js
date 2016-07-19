@@ -45,7 +45,7 @@ window.addEventListener('scroll', function(event){
         element = element.scrollingElement;
     }
     let percentScrolled = (element.scrollTop / element.clientHeight) * 100;
-    if (percentScrolled > 87 && !currentlyLoading){
+    if (percentScrolled > 75 && !currentlyLoading){
         getNew()
     }
 });
