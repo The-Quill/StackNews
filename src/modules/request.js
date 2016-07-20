@@ -2,6 +2,7 @@ import request from 'request-promise'
 import dom from 'cheerio'
 import errors from 'request-promise/errors'
 import sleep from 'sleep'
+import debug from './debug'
 
 async function Request(options){
     let defaultOptions = {
@@ -18,14 +19,14 @@ async function Request(options){
             isInProgress = false
         } catch(error) {
             failedAttempts = attempts;
-            console.log(`  - Attempt no ${attempts} failed for url ${options.url}`)
+            debug.medium(`  - Attempt no ${attempts} failed for url ${options.url}`)
             if (attempts > 10){
                 console.error(error)
                 return Promise.reject(error)
             }
         }
     }
-    console.log(`  - Attempt no ${attempts} passed after failing ${failedAttempts} attempts..`)
+    debug.medium(`  - Attempt no ${attempts} passed after failing ${failedAttempts} attempts..`)
     return Promise.resolve(result)
 }
 async function HtmlRequest(options){
