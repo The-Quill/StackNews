@@ -1,14 +1,15 @@
 import React from 'react'
 import HtmlEntities from 'html-entities'
+import debug from '../../modules/debug'
 
 const entities = new HtmlEntities.AllHtmlEntities();
 
 const ListItem = React.createClass({
     getInitialState(){
-        //console.log(this.props.item);
+        debug.low(this.props.item);
         return {}
     },
-    render () {        //
+    render () {
         let isModPost = this.props.item['owner:ismoderator'] === 'true'
         return (
             <div className={`list-item ${isModPost ? 'moderatorPost' : ''}`}
