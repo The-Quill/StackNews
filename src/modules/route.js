@@ -1,3 +1,4 @@
+import debug from './debug'
 class Route {
     constructor(name, log){
         this.log = log;
@@ -11,7 +12,7 @@ class Route {
         return (req, res) => {
             if (that.log){
                 let { path } = req
-                console.log(`${that.name}: - Access attempt on variable at path: ${path}`)
+                debug.important(`${that.name}: - Access attempt on variable at path: ${path}`)
             }
             that._router(req, res)
         }
