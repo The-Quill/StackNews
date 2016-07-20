@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV !== 'production'){
-    require('longjohn');
-}
-
 function high(...args){
     console.log(...args)
 }
