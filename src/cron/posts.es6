@@ -1,13 +1,10 @@
 import { GetPostsFromSite } from '../modules/se_api'
 import { RedisSession } from '../modules/redis'
 import { Time } from '../modules/time'
+import debug from '../modules/debug'
 
 const session = new RedisSession();
 const time    = new Time();
-
-if (process.env.NODE_ENV !== 'production'){
-    require('longjohn');
-}
 
 try {
     session.client.getAsync('post:last-fetch-date')
@@ -21,7 +18,7 @@ try {
                 })
             )
         } else {
-            console.log(`Getting updated data...`)
+            debug.important(`Getting updated data...`)
             // do last modified magic here
             //
             let sites = await session.client.smembersAsync('sites');
@@ -33,7 +30,7 @@ try {
             )
         }
         await session.client.setAsync('post:last-fetch-date', time.now)
-        console.log(`Finishing job.`)
+        debug.important(`Finishing job.`)
         process.exit()
     });
 } catch(error){
