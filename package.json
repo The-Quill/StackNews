@@ -4,9 +4,11 @@
   "description": "A platform for viewing the new Meta posts from Stack Exchange.",
   "main": "dist/web_server/index.js",
   "scripts": {
-    "start_server": "./node_modules/.bin/forever start dist/web_server/index.js",
-    "build": "grunt",
-    "first": "grunt && npm run start_server"
+    "start_server": "./node_modules/.bin/forever start dist/web/index.js",
+    "stop_server": "./node_modules/.bin/forever stop dist/web/index.js",
+    "build": "webpack && grunt",
+    "first": "NODE_ENV=production npm run build && npm run start_server",
+    "dev": "NODE_ENV=debug npm run build && node dist/web/index.js"
   },
   "repository": {
     "type": "git",
