@@ -10,8 +10,10 @@
     ],
     "scripts": [
         {
-            "": "https://fb.me/react-15.2.1.min.js",
-            "": "https://fb.me/react-dom-15.2.1.min.js"
+            "src": "https://fb.me/react-15.2.1.min.js"
+        },
+        {
+            "src": "https://fb.me/react-dom-15.2.1.min.js"
         }
     ],
     "allowedFileExtensions": [
