@@ -3,6 +3,7 @@ import { RedisSession } from './redis'
 import { Time } from './time'
 import querystring from 'querystring';
 import sleep from 'sleep';
+import debug from './debug'
 
 async function SiteNameToApiFormat(sitename){
     sitename = sitename.toLowerCase();
@@ -49,16 +50,16 @@ async function fetchUntilEnd(options = {}){
             options.url = url.generate()
             result = await JsonRequest(options);
             if (result.hasOwnProperty('backoff')){
-                console.log(`Backoff received trying to access ${url.queryStrings.site}, waiting ${result.backoff} seconds`)
+                debug.important(`Backoff received trying to access ${url.queryStrings.site}, waiting ${result.backoff} seconds`)
                 await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
-                console.log(`returning from backoff`);
+                debug.medium(`returning from backoff`);
             }
             await sleep.sleep(4)
             items = Array.concat(items, result.items)
             hasMore = result.hasOwnProperty('has_more') ? result.has_more : false
         }
-        console.log(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
+        debug.medium(`Used ${result.quota_max - result.quota_remaining} out of ${result.quota_max} requests`)
         return Promise.resolve(items)
     } catch (error){
         console.error(error);
@@ -111,7 +112,7 @@ async function GetPostsFromSite(sitename = 'meta', since = '0'){
     }
     try {
         let posts = await fetchUntilEnd(options)
-        console.log(` - Grabbed ${posts.length} posts from ${sitename}`)
+        debug.medium(` - Grabbed ${posts.length} posts from ${sitename}`)
         return Promise.resolve(posts)
     } catch (error){
         return Promise.reject(error)
@@ -148,7 +149,7 @@ async function LoadNewPosts(page = 1, count = 30){
                 'meta.ja.stackoverflow'
             ]
             if (noShowSites.includes(post.site)){
-                //console.log(`Blocked post found at ${post.site}`)
+                debug.low(`Blocked post found at ${post.site}`)
                 continue;
             }
             post.site = await session.client.hgetallAsync(`site:${post.site}`)
