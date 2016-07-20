@@ -8,7 +8,12 @@
             "src": "https://fonts.googleapis.com/css?family=Raleway"
         }
     ],
-    "scripts": [],
+    "scripts": [
+        {
+            "": "https://fb.me/react-15.2.1.min.js",
+            "": "https://fb.me/react-dom-15.2.1.min.js"
+        }
+    ],
     "allowedFileExtensions": [
         "css",
         "css.map",

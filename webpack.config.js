@@ -10,6 +10,12 @@ module.exports = {
         path: 'dist/web/resources',
         filename: 'render.js'
     },
+    plugins: [
+        new webpack.EnvironmentPlugin(['NODE_ENV']),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        })
+    ],
     module: {
         loaders: [
             {
