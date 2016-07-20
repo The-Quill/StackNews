@@ -12,7 +12,7 @@ class Route {
         return (req, res) => {
             if (that.log){
                 let { path } = req
-                debug.important(`${that.name}: - Access attempt on variable at path: ${path}`)
+                debug.high(`${that.name}: - Access attempt on variable at path: ${path}`)
             }
             that._router(req, res)
         }

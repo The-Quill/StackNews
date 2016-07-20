@@ -13,7 +13,7 @@ const env = redisDetails.environments[
 class RedisSession {
     constructor(){
         this._client = redis.createClient(env);
-        this._client.on("error", err => debug.important(`Error ${err}`))
+        this._client.on("error", err => debug.high(`Error ${err}`))
     }
     end(){
         this._client.quit()

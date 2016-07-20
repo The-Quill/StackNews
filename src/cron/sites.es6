@@ -9,12 +9,12 @@ const time    = new Time();
 session.client.getAsync('site:last-fetch-date')
 .then(async function(res, reply) {
     if (reply === null || time.weekOlder(res)){
-        debug.important(`fetching new site list`)
+        debug.high(`fetching new site list`)
         let sites = await GetMetaSites();
         await Promise.all(sites.map(site => updateMetaSite(site)))
         await session.client.setAsync('site:last-fetch-date', time.now)
     }
-    debug.important(`Finishing job.`)
+    debug.high(`Finishing job.`)
     process.exit()
 });
 async function updateMetaSite(site){

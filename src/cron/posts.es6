@@ -18,7 +18,7 @@ try {
                 })
             )
         } else {
-            debug.important(`Getting updated data...`)
+            debug.high(`Getting updated data...`)
             // do last modified magic here
             //
             let sites = await session.client.smembersAsync('sites');
@@ -30,7 +30,7 @@ try {
             )
         }
         await session.client.setAsync('post:last-fetch-date', time.now)
-        debug.important(`Finishing job.`)
+        debug.high(`Finishing job.`)
         process.exit()
     });
 } catch(error){

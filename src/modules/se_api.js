@@ -50,7 +50,7 @@ async function fetchUntilEnd(options = {}){
             options.url = url.generate()
             result = await JsonRequest(options);
             if (result.hasOwnProperty('backoff')){
-                debug.important(`Backoff received trying to access ${url.queryStrings.site}, waiting ${result.backoff} seconds`)
+                debug.high(`Backoff received trying to access ${url.queryStrings.site}, waiting ${result.backoff} seconds`)
                 await sleep.sleep(result.backoff)
                 await sleep.sleep(60)
                 debug.medium(`returning from backoff`);

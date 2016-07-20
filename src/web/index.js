@@ -9,7 +9,7 @@ import FourOhFourRoute from './routes/404'
 
 import Defaults from './defaults'
 
-import debug from './modules/debug'
+import debug from '../modules/debug'
 
 const app = express()
 let port = 4444
@@ -29,4 +29,4 @@ Defaults.bannedFileExtensions.forEach(
 app.get('*', FourOhFourRoute);
 app.listen(port);
 
-debug.important(`Server is up and running at port: ${port}`);
+debug.high(`Server is up and running at port: ${port}`);
