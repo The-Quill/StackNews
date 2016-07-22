@@ -51,6 +51,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-execute": "^0.2.2",
     "grunt-sass": "^1.2.0",
+    "gulp-babel": "^6.1.2",
     "html-entities": "^1.2.0",
     "json-loader": "^0.5.4",
     "load-grunt-tasks": "^3.5.0",
