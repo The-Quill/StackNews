@@ -3,7 +3,6 @@ const exec = require('child_process').exec;
 const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const rename = require('gulp-rename');
-const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 const forever = require('forever-monitor');
 const prefixer = require('gulp-autoprefixer');
@@ -11,27 +10,8 @@ const sourcemaps = require('gulp-sourcemaps');
 const runSequence = require('run-sequence');
 
 var session = null;
-
-function notifierConfig(config){
-    var target = {
-        sound: true
-    }
-    if (config != null) {
-        for (var key in config) {
-            if (Object.prototype.hasOwnProperty.call(config, key)) {
-                target[key] = config[key];
-            }
-        }
-    }
-    return target;
-}
 function onError(err) {
-    notify.onError({
-        title:    "Build failure!",
-        message:  "Error: <%= error.message %>",
-        sound:    "Beep"
-    })(err);
-    this.emit('end');
+    console.error(err)
 };
 
 gulp.task('babel:web', function() {
@@ -102,9 +82,6 @@ gulp.task('sass', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(rename('main.css'))
     .pipe(prefixer())
-    .pipe(notify(notifierConfig({
-        title: 'SASS build complete'
-    })))
     .pipe(sourcemaps.write('/'))
     .pipe(gulp.dest('dist/web/resources'))
 
