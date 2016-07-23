@@ -143,16 +143,23 @@ web (){
     read redis_master_ip
     echo "Please enter the Redis Master Auth password:"
     read -s redis_master_password
+    echo "Please enter the HAProxy IP address:"
+    read HAProxy_IP
     echo "{
-    \"current_environment\": \"prod\",
-    \"environments\": {
-        \"prod\": {
-            \"host\": \"$redis_master_ip\",
-            \"port\": \"6379\",
-            \"password\": \"$redis_master_password\"
+    \"redis\": {
+        \"current_environment\": \"prod\",
+        \"environments\": {
+            \"prod\": {
+                \"host\": \"$redis_master_ip\",
+                \"port\": \"6379\",
+                \"password\": \"$redis_master_password\"
+            }
         }
+    },
+    \"haproxy\": {
+        \"IP\": \"$HAProxy_IP\"
     }
-}" > "$DIR/redis.json"
+}" > "$DIR/web.config.json"
 
     echo "Before continuing, we need to build the solution.
 Have you done this, or would you like to now? (yes or no)"
