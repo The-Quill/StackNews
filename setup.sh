@@ -34,7 +34,7 @@ requirepass $password
 $slave_text
 " > "/etc/redis/redis.conf"
     echo "The password for Redis is $password"
-    sudo service redis-server restart
+    sudo service redis restart
 }
 
 
@@ -133,6 +133,7 @@ listen appname 0.0.0.0:80
     option httpclose
     option forwardfor
     $web_servers $n" > "/etc/haproxy/haproxy.cfg"
+    service haproxy restart
 }
 
 # web / cron
