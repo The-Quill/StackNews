@@ -21,9 +21,12 @@
   },
   "homepage": "https://github.com/The-Quill/StackNews#readme",
   "dependencies": {
+    "babel-runtime": "^6.9.2",
+    "bluebird": "^3.4.1",
     "cheerio": "^0.20.0",
     "express": "^4.14.0",
     "forever": "^0.15.2",
+    "forever-monitor": "^1.7.0",
     "gulp": "^3.9.1",
     "node-jsx": "^0.13.3",
     "path": "^0.12.7",
@@ -32,14 +35,12 @@
     "react-redux": "^4.4.5",
     "redis": "^2.6.2",
     "redux": "^3.5.2",
+    "webpack": "^1.13.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.10.1",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-css-modules-transform": "^0.1.1",
-    "babel-plugin-react-css-modules": "0.0.0",
     "babel-plugin-syntax-async-functions": "^6.8.0",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-plugin-transform-class-properties": "^6.10.2",
@@ -57,7 +58,6 @@
     "html-entities": "^1.2.0",
     "json-loader": "^0.5.4",
     "moment": "^2.13.0",
-    "node-sass": "^3.8.0",
     "request-promise": "^3.0.0",
     "run-sequence": "^1.2.2",
     "sleep": "^3.0.1"
