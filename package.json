@@ -6,9 +6,9 @@
   "scripts": {
     "start_server": "./node_modules/.bin/forever start dist/web/index.js",
     "stop_server": "./node_modules/.bin/forever stop dist/web/index.js",
-    "build": "webpack && grunt",
-    "first": "NODE_ENV=production webpack -p && grunt && npm run start_server",
-    "dev": "NODE_ENV=debug webpack && grunt && node dist/web/index.js"
+    "build": "gulp",
+    "first": "NODE_ENV=production gulp",
+    "dev": "NODE_ENV=debug gulp dev"
   },
   "repository": {
     "type": "git",
