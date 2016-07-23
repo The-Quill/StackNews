@@ -1,13 +1,13 @@
 import redis from 'redis'
-import redisDetails from '../../redis.json'
+import defaults from '../../web.config.json'
 import bluebird from 'bluebird'
 import debug from './debug'
 
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
 
-const env = redisDetails.environments[
-    redisDetails.current_environment
+const env = defaults.redis.environments[
+    defaults.redis.current_environment
 ];
 
 class RedisSession {
