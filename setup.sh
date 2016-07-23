@@ -177,7 +177,7 @@ web (){
 Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) gulp; break;;
+            Yes ) $DIR/node_modules/.bin/gulp; break;;
             No ) break;;
         esac
     done
