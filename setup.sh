@@ -2,13 +2,16 @@ n="
 "
 # From http://stackoverflow.com/a/246128
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pass (){
+    echo $1 | sha256sum
+}
 
 # Redis
 redis (){
     slave=false;
     echo "Enter the desired password for the Redis instance:"
     read -s password
-    password=$password | sha256sum
+    password=$(pass $password)
     echo "Is this a slave?"
     select yn in "Yes" "No"; do
         case $yn in
