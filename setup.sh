@@ -8,6 +8,7 @@ pass (){
 
 # Redis
 redis (){
+    ulimit -n 10000
     slave=false;
     echo "Enter the desired password for the Redis instance:"
     read -s password
