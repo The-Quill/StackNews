@@ -35,6 +35,7 @@ tcp-backlog 511
 timeout 80
 dir $DIR
 supervised upstart
+daemonize yes
 #bind 127.0.0.1
 maxmemory-policy noeviction
 requirepass $password
