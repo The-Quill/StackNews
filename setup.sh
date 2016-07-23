@@ -173,7 +173,6 @@ Have you done this, or would you like to now? (yes or no)$n"
         echo "Sites CRON job added."
     fi
 
-    # Add service item for the web server
     echo "start on filesystem
 script
     $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js
