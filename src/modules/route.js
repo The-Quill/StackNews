@@ -13,7 +13,10 @@ class Route {
         return (req, res) => {
             let proxyIP = req.ip;
             if (proxyIP.replace('::ffff:', '') != defaults.haproxy.IP){
-                return res.set("Connection", "close");
+                res.set("Connection", "close");
+                res.set('Proof', 'close');
+                res.send('bye');
+                return;
             }
             if (that.log){
                 let { path } = req
