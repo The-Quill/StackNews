@@ -140,10 +140,16 @@ gulp.task('watch', function() {
 
 /* CLI tasks */
 gulp.task('default', function(callback) {
-    runSequence('dev', 'server:start', 'watch', callback);
+    runSequence('dev:build', callback);
 });
-gulp.task('dev', function(callback) {
+gulp.task('dev:build', function(callback) {
     runSequence('babel', 'sass', 'copy', 'webpack', callback);
+});
+gulp.task('start', function(callback){
+    runSequence('dev', callback);
+})
+gulp.task('dev', function(callback) {
+    runSequence('dev:build', 'server:start', 'watch', callback);
 });
 gulp.task('prod', function(callback) {
     runSequence('dev', 'watch', callback);
