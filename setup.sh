@@ -172,8 +172,8 @@ web (){
         \"IP\": \"$HAProxy_IP\"
     }
 }" > "$DIR/web.config.json"
-    npm install -g webpack gulp
-    npm install
+    npm install -g webpack gulp > /dev/null 2 >&1
+    npm install > /dev/null 2 >&1
     echo "Before continuing, we need to build the solution.
 Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
