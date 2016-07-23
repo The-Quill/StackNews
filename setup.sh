@@ -200,6 +200,7 @@ script
     $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js
     echo \"Server service started\"
 end script" > "/etc/init/web"
+    service web start
 }
 
 echo "StackNews setup script
