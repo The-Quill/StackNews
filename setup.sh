@@ -172,6 +172,7 @@ web (){
         \"IP\": \"$HAProxy_IP\"
     }
 }" > "$DIR/web.config.json"
+    npm install -g webpack gulp
     npm install
     echo "Before continuing, we need to build the solution.
 Have you done this, or would you like to now? (yes or no)"
@@ -193,12 +194,12 @@ Have you done this, or would you like to now? (yes or no)"
         echo "Sites CRON job added."
     fi
 
-    echo "start on filesystem
+    echo "start on runlevel [2345]
+respawn
 script
     $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js
     echo \"Server service started\"
-end script" > "/etc/init/web.conf"
-    update-rc.d web defaults
+end script" > "/etc/init/web"
 }
 
 echo "StackNews setup script

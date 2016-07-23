@@ -123,7 +123,7 @@ gulp.task('copy', function(callback) {
     runSequence('copy:json', 'copy:resources', callback);
 });
 gulp.task('webpack', function(){
-    exec('webpack -p', function (err, stdout, stderr) {
+    exec('./node_modules/.bin/webpack -p', function (err, stdout, stderr) {
         stderr && console.log(stderr);
     });
 })
