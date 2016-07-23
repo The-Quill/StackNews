@@ -172,7 +172,7 @@ web (){
         \"IP\": \"$HAProxy_IP\"
     }
 }" > "$DIR/web.config.json"
-
+    npm install
     echo "Before continuing, we need to build the solution.
 Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
