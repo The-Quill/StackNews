@@ -45,3 +45,4 @@ dist/*
 dump.rdb
 
 *.txt
+web.config.json
