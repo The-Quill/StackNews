@@ -1,41 +1,29 @@
-n = "
+n="
 "
 # From http://stackoverflow.com/a/246128
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo "StackNews setup script
------------
-Is this a Redis server, HAProxy server or web/cron server? $n"
-
-select option in "Redis" "Web" "HAProxy"; do
-    case $option in
-        Redis ) redis(); break;;
-        Web ) web(); break;;
-        HAProxy ) haproxy(); break;;
-    esac
-done
-
 # Redis
 redis (){
-    slave = false;
+    slave=false;
     echo "Enter the desired password for the Redis instance:"
     read -s password
-    password = $password | sha256sum
+    password=$password | sha256sum
     echo "Is this a slave?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) $slave = true; break;;
-            No ) $slave = false; break;;
+            Yes ) slave=1; break;;
+            No ) slave=0; break;;
         esac
     done
-    slave_text = ""
-    if [[ $slave ]]; then
-        echo "Enter the Master IP address: $n"
+    slave_text="";
+    if [[ $slave -eq 1 ]]; then
+        echo "Enter the Master IP address:"
         read master_ip
-        echo "Enter the Redis Master password: $n"
+        echo "Enter the Redis Master password:"
         read -s master_password
-        slave_text = "slaveof $master_ip 6379
-        masterauth $master_password $n"
+        slave_text="slaveof $master_ip 6379
+masterauth $master_password $n"
     fi
     echo "tcp-keepalive 60
 #bind 127.0.0.1
@@ -52,60 +40,73 @@ $slave_text
 
 # HAProxy
 haproxy (){
-    stats = false;
-    stats_text = "stats disable";
-    stats_text
-    ip_addresses = ( "${ip_port()}" );
-    more_web_servers = true;
+    stats=1;
+    stats_text="stats disable";
+    echo "Please enter the IP address:"
+    read initial_ip
+    echo "Please enter the port:"
+    read initial_port
+    i=1
+    web_servers="server web$i $initial_ip:$initial_port check$n"
+    more_web_servers=1;
 
-    while [ $more_web_servers ]
+    while [ $more_web_servers -eq 1 ]
     do
         echo "Would you like to add another web server?"
         select yn in "Yes" "No"; do
             case $yn in
-                Yes ) ip_addresses += ( "${ip_port()}" ); break;;
-                No ) $more_web_servers = false; break;;
+                Yes )
+                    echo "Please enter the IP address:"
+                    read repeat_ip
+                    echo "Please enter the port:"
+                    read repeat_port;
+                    ((i++))
+                    web_servers+="    server web$i $repeat_ip:$repeat_port check$n";
+                    break;;
+                No ) more_web_servers=0; break;;
             esac
         done
-    done
-    web_servers_text = ""
-    for i in "${ip_addresses[@]}";do
-        web_servers_text += "server web$i ${ip_addresses[$i]} check"
     done
 
     echo "Do you want to turn HAProxy stats on?"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) $stats = true; break;;
-            No ) $stats = false; break;;
+            Yes ) stats=1; break;;
+            No ) stats=0; break;;
         esac
     done
-    if [[ $stats ]]; then
-        echo "Enter the URL for stats:$n"
+    if [[ $stats -eq 1 ]]; then
+        echo "Enter the URL for stats:"
         read stats_uri
-        echo "Please enter a user to access the stats page$n"
-        users = ( "${user_password()}" );
-        more_users = true;
+        echo "Please enter a user to access the stats page"
+        echo "Please enter the Username:"
+        read username
+        echo "Please enter the Password:"
+        read -s password
+        users="stats auth $username:$password $n"
+        more_users=1;
 
-        while [ $more_users ]
+        while [ $more_users -eq 1 ]
         do
             echo "Would you like to add another user?"
             select yn in "Yes" "No"; do
                 case $yn in
-                    Yes ) users += ( "${user_password()}" ); break;;
-                    No ) $more_users = false; break;;
+                    Yes )
+                        echo "Please enter the Username:"
+                        read username
+                        echo "Please enter the Password:"
+                        read -s password
+                        users+="    stats auth $username:$password $n"
+                        break;;
+                    No ) more_users=0; break;;
                 esac
             done
         done
-        users_text = ""
-        for i in "${users[@]}";do
-            users_text += "${users[$i]} $n"
-        done
 
-        stats_text = "stats enable
-stats uri $stats_uri
-stats realm Strictly\ Private
-$users_text"
+        stats_text="stats enable
+    stats uri $stats_uri
+    stats realm Strictly\ Private
+    $users"
     fi
 
     echo "global
@@ -131,30 +132,30 @@ listen appname 0.0.0.0:80
     balance roundrobin
     option httpclose
     option forwardfor
-    $web_servers_text $n" > "/etc/haproxy/haproxy.cfg"
+    $web_servers $n" > "/etc/haproxy/haproxy.cfg"
 }
 
 # web / cron
 web (){
-    cron_dir = "$DIR/dist/cron/";
-    cron_content = "/usr/local/bin/node $cron_dir";
-    echo "Please enter the Redis Master IP: $n"
+    cron_dir="$DIR/dist/cron";
+    cron_content="/usr/local/bin/node $cron_dir";
+    echo "Please enter the Redis Master IP:"
     read redis_master_ip
-    echo "Please enter the Redis Master Auth password: $n"
+    echo "Please enter the Redis Master Auth password:"
     read -s redis_master_password
     echo "{
-        \"current_environment\": \"prod\",
-        \"environments\": {
-            \"prod\": {
-                \"host\": \"$redis_master_ip\",
-                \"port\": \"6379\",
-                \"password\": \"$redis_master_password\"
-            }
+    \"current_environment\": \"prod\",
+    \"environments\": {
+        \"prod\": {
+            \"host\": \"$redis_master_ip\",
+            \"port\": \"6379\",
+            \"password\": \"$redis_master_password\"
         }
-    }" > "$DIR/redis.json"
+    }
+}" > "$DIR/redis.json"
 
     echo "Before continuing, we need to build the solution.
-Have you done this, or would you like to now? (yes or no)$n"
+Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
         case $yn in
             Yes ) gulp; break;;
@@ -181,20 +182,14 @@ end script" > "/etc/init/web.conf"
     update-rc.d web defaults
 }
 
+echo "StackNews setup script
+-----------
+Is this a Redis server, HAProxy server or web/cron server?"
 
-# Misc prompting functions
-
-ip_port (){
-    echo "Please enter the IP address:$n"
-    read IP
-    echo "Please enter the port:$n"
-    read PORT
-    return "$IP:$PORT"
-}
-user_password (){
-    echo "Please enter the Username:"
-    read username
-    echo "Please enter the Password:"
-    read -s password
-    return "stats auth $username:$password"
-}
+select option in "Redis" "Web" "HAProxy"; do
+    case $option in
+        Redis ) redis; break;;
+        Web ) web; break;;
+        HAProxy ) haproxy; break;;
+    esac
+done
