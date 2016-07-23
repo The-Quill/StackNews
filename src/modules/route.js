@@ -12,7 +12,7 @@ class Route {
         var that = this;
         return (req, res) => {
             let proxyIP = req.ip;
-            if (proxyIP.replace('::ffff:', '') != defaults.haproxy.ip){
+            if (proxyIP.replace('::ffff:', '') != defaults.haproxy.IP){
                 return res.set("Connection", "close");
             }
             if (that.log){
