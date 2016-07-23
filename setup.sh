@@ -36,8 +36,6 @@ timeout 80
 dir $DIR
 #bind 127.0.0.1
 maxmemory-policy noeviction
-appendonly yes
-appendfilename redis-staging-ao.aof
 requirepass $password
 $slave_text
 " > "/etc/redis/redis.conf"
