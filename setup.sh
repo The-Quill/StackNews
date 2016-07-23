@@ -3,7 +3,7 @@ n="
 # From http://stackoverflow.com/a/246128
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pass (){
-    echo $1 | sha256sum
+    echo $1 | sha256sum | head -c 64
 }
 
 # Redis
