@@ -1,5 +1,6 @@
 import debug from './debug'
 import defaults from '../../web.config.json'
+import otherDefaults from '../web/defaults.json'
 class Route {
     constructor(name, log){
         this.log = log;
@@ -15,7 +16,10 @@ class Route {
             if (proxyIP.replace('::ffff:', '') != defaults.haproxy.IP){
                 res.set("Connection", "close");
                 res.set('Proof', 'close');
-                res.send('bye');
+                var video = otherDefaults.youtubeVideosToRedirectTo[
+                    Math.floor(Math.random() * otherDefaults.youtubeVideosToRedirectTo.length)
+                ]
+                res.send(`<script>document.location = '${video}'</script>`);
                 return;
             }
             if (that.log){

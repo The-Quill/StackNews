@@ -26,5 +26,10 @@
         "json",
         "config",
         "js"
+    ],
+    "youtubeVideosToRedirectTo": [
+        "http://rebecca.blackfriday/",
+        "https://www.youtube.com/watch?v=Sagg08DrO5U",
+        "https://www.youtube.com/watch?v=F-X4SLhorvw"
     ]
 }
