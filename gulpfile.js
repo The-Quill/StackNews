@@ -16,8 +16,12 @@ function notifierConfig(config){
     var target = {
         sound: true
     }
-    for(var key in config){
-        ({ [key]: target[key] } = config);
+    if (config != null) {
+        for (var key in config) {
+            if (Object.prototype.hasOwnProperty.call(config, key)) {
+                target[key] = config[key];
+            }
+        }
     }
     return target;
 }
