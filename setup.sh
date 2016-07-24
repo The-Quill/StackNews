@@ -32,7 +32,7 @@ masterauth $master_password $n"
     echo "tcp-keepalive 60
 port 6379
 tcp-backlog 511
-timeout 80
+timeout 600
 dir $DIR
 supervised upstart
 daemonize yes
@@ -41,9 +41,6 @@ maxmemory-policy noeviction
 requirepass $password
 $slave_text
 " > "/etc/redis/redis.conf"
-    echo "never > /sys/kernel/mm/transparent_hugepage/enabled"
-    echo "never > /sys/kernel/mm/transparent_hugepage/enabled
-sysctl -w net.core.somaxconn=65535" > "/etc/rc.local"
     echo "The password for Redis is $password"
     sudo service redis restart
 }
@@ -182,7 +179,7 @@ web (){
 Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) $DIR/node_modules/.bin/gulp; break;;
+            Yes ) NODE_ENV=production $DIR/node_modules/.bin/gulp; break;;
             No ) break;;
         esac
     done
