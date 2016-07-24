@@ -28,6 +28,11 @@ StackNews is powered by:
 
 For more information, read the blog post [here][blog_post] I wrote which goes into more detail.
 
+---
+#License
+
+This project is licensed under the MIT License.
+
 [sn]:http://stacknews.org
 [photo]:http://i.stack.imgur.com/TCkXn.png
 [blog_post]:example.com
