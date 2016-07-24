@@ -138,7 +138,7 @@ defaults
     timeout server  10000
 
 listen web
-    bind 0.0.0.0:8080
+    bind 0.0.0.0:80
     timeout connect  5000
     timeout client  10000
     timeout server  10000
