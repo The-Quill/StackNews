@@ -52,10 +52,10 @@ sysctl -w net.core.somaxconn=65535" > "/etc/rc.local"
 # HAProxy
 haproxy (){
     stats=1;
-    stats_text="stats disable";
-    echo "Please enter the IP address:"
+    stats_text="stats disable$n";
+    echo "Please enter the IP address of the web server:"
     read initial_ip
-    echo "Please enter the port:"
+    echo "Please enter the port of the web server:"
     read initial_port
     i=1
     web_servers="server web$i $initial_ip:$initial_port check$n"
@@ -94,7 +94,7 @@ haproxy (){
         read username
         echo "Please enter the Password:"
         read -s password
-        users="stats auth $username:$password $n"
+        users="stats auth $username:$password$n"
         more_users=1;
 
         while [ $more_users -eq 1 ]
@@ -107,7 +107,7 @@ haproxy (){
                         read username
                         echo "Please enter the Password:"
                         read -s password
-                        users+="    stats auth $username:$password $n"
+                        users+="    stats auth $username:$password$n"
                         break;;
                     No ) more_users=0; break;;
                 esac
@@ -137,10 +137,10 @@ defaults
     timeout client  10000
     timeout server  10000
 
-listen appname 0.0.0.0:80
+listen web 0.0.0.0:80
+    bind 0.0.0.0:8080
     mode http
-    $stats_text
-    balance roundrobin
+    $stats_text\balance roundrobin
     option httpclose
     option forwardfor
     $web_servers $n" > "/etc/haproxy/haproxy.cfg"
