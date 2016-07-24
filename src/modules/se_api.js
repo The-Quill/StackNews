@@ -136,7 +136,6 @@ async function LoadNewPosts(page = 1, count = 30){
         var posts = [];
         for (var i = itemKeys.length - 1; i >= 0; i--){
             let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
-            console.log(`fetched ${post.title}`)
             if (post == null){
                 throw new Error(`value at hgetall post:${itemKeys[i]} was null`)
             }
@@ -154,7 +153,6 @@ async function LoadNewPosts(page = 1, count = 30){
                 continue;
             }
             post.site = await session.client.hgetallAsync(`site:${post.site}`)
-            console.log(` - Adding ${post.title}`)
             posts.push(post)
         }
         return Promise.resolve(posts)
