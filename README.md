@@ -21,6 +21,7 @@ Just visit [stacknews.org][sn] in your browser.
 StackNews is powered by:
 
  - [Node.js][node]
+ - [React][react] and [Redux][redux]
  - [Express][express]
  - [Redis][redis]
  - [HAProxy][haproxy]
@@ -35,6 +36,8 @@ This project is licensed under the MIT License.
 
 [sn]:http://stacknews.org
 [photo]:http://i.stack.imgur.com/TCkXn.png
+[react]:https://facebook.github.io/react/
+[redux]:http://redux.js.org/
 [blog_post]:example.com
 [haproxy]:http://www.haproxy.org/
 [redis]:http://redis.io/
