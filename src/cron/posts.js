@@ -1,6 +1,7 @@
 import { GetPostsFromSite } from '../modules/se_api'
 import { RedisSession } from '../modules/redis'
 import { Time } from '../modules/time'
+import sleep from 'sleep'
 import debug from '../modules/debug'
 
 const session = new RedisSession();
@@ -91,6 +92,7 @@ async function updatePost(site, post){
         })
         await session.client.hmsetAsync([postKey, ...data])
         await session.client.saddAsync(`posts:${site}`, `${post.question_id}`)
+        await sleep.sleep(4)
         return session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`)
     } catch (error){
         console.error(error)
