@@ -28,8 +28,8 @@ function Url(url){
     }
 }
 const is = {
-    Meta: name => { return name.toLowerCase().includes('meta') },
-    Main: name => { return name.toLowerCase() != "meta stack exchange" && !name.toLowerCase().includes('meta') }
+    Meta: name => { return name.toLowerCase().indexOf('meta') != -1 },
+    Main: name => { return name.toLowerCase() != "meta stack exchange" && !name.toLowerCase().indexOf('meta') != -1 }
 }
 async function fetchUntilEnd(options = {}){
     var items = []
@@ -136,10 +136,11 @@ async function LoadNewPosts(page = 1, count = 30){
         var posts = [];
         for (var i = itemKeys.length - 1; i >= 0; i--){
             let post = await session.client.hgetallAsync(`post:${itemKeys[i]}`)
+            console.log(`fetched ${post.title}`)
             if (post == null){
                 throw new Error(`value at hgetall post:${itemKeys[i]} was null`)
             }
-            if (!post.hasOwnProperty('site') || post.site == ""){
+            if (!post.hasOwnProperty('site') || post.site.length == 0){
                 console.error('site property not found on post')
                 continue;
             }
@@ -148,15 +149,17 @@ async function LoadNewPosts(page = 1, count = 30){
                 'meta.ru.stackoverflow',
                 'meta.ja.stackoverflow'
             ]
-            if (noShowSites.includes(post.site)){
+            if (noShowSites.indexOf(post.site) != -1){
                 debug.low(`Blocked post found at ${post.site}`)
                 continue;
             }
             post.site = await session.client.hgetallAsync(`site:${post.site}`)
+            console.log(` - Adding ${post.title}`)
             posts.push(post)
         }
         return Promise.resolve(posts)
     } catch(error) {
+        console.error(error)
         throw new Error(error)
     }
 }
