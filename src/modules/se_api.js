@@ -124,7 +124,7 @@ async function FetchPosts(offsetMultiplier = 1, perPage = 30){
     let session = new RedisSession();
     let count = await session.client.zcardAsync('posts')
     let offset = (offsetMultiplier === 0 ? 1 : offsetMultiplier) * perPage
-    let fetch = count - offset
+    let fetch = count < offset ? 0 : count - offset
     return session.client.zrangebyscoreAsync(['posts', '-inf', '+inf', 'LIMIT', `${fetch}`, `${perPage}`])
 }
 async function LoadNewPosts(page = 1, count = 30){
