@@ -151,7 +151,7 @@ listen web
 # web / cron
 web (){
     cron_dir="$DIR/dist/cron";
-    cron_content="/usr/local/bin/node $cron_dir";
+    cron_content="/usr/bin/node $cron_dir";
     echo "Please enter the Redis Master IP:"
     read redis_master_ip
     echo "Please enter the Redis Master Auth password:"
