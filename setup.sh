@@ -138,6 +138,9 @@ defaults
     timeout server  10000
 
 listen web 0.0.0.0:80
+    timeout connect  5000
+    timeout client  10000
+    timeout server  10000
     bind 0.0.0.0:8080
     mode http
     $stats_text\balance roundrobin
