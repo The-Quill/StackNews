@@ -197,7 +197,7 @@ Have you done this, or would you like to now? (yes or no)"
 
     echo "start on runlevel [2345]
     start on filesystem
-exec $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js" > "/etc/init/web.conf"
+exec $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js -o $DIR/out.log" > "/etc/init/web.conf"
     service web start
 }
 

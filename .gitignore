@@ -46,3 +46,4 @@ dump.rdb
 
 *.txt
 web.config.json
+out.log
