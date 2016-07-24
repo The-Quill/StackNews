@@ -179,7 +179,7 @@ web (){
 Have you done this, or would you like to now? (yes or no)"
     select yn in "Yes" "No"; do
         case $yn in
-            Yes ) NODE_ENV=production $DIR/node_modules/.bin/gulp; break;;
+            Yes ) npm run install; break;;
             No ) break;;
         esac
     done
@@ -196,11 +196,8 @@ Have you done this, or would you like to now? (yes or no)"
     fi
 
     echo "start on runlevel [2345]
-respawn
-script
-    $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js
-    echo \"Server service started\"
-end script" > "/etc/init/web"
+    start on filesystem
+exec $DIR/node_modules/.bin/forever start $DIR/dist/web/index.js" > "/etc/init/web.conf"
     service web start
 }
 
