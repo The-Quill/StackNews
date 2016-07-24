@@ -21,7 +21,7 @@ Just visit [stacknews.org][sn] in your browser.
 StackNews is powered by:
 
  - [Node.js][node]
- - [React][react] and [Redux][redux]
+ - [React][react] and [Redux][redux].
  - [Express][express]
  - [Redis][redis]
  - [HAProxy][haproxy]
