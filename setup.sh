@@ -186,12 +186,12 @@ Have you done this, or would you like to now? (yes or no)"
 
     if [ -f "$cron_dir/posts.js" ]
     then
-        echo "$cron_content/posts.js" > "/etc/cron.hourly/posts.sh"
+        echo "$cron_content/posts.js" > "/etc/cron.hourly/posts"
         echo "Posts CRON job added."
     fi
     if [ -f "$cron_dir/sites.js" ]
     then
-        echo "$cron_content/sites.js" > "/etc/cron.daily/sites.sh"
+        echo "$cron_content/sites.js" > "/etc/cron.daily/sites"
         echo "Sites CRON job added."
     fi
 
