@@ -11,10 +11,16 @@ nav {
     font-family: "peach-sundress";
     padding-left: 30px;
     font-size: 1.2em;
+    @media #{$is-mobile} {
+        font-size: 3em;
+    }
 }
 footer {
     font-family: 'Raleway', sans-serif;
     padding: 15px;
     background-color: grey;
     margin-top: 45px;
+    @media #{$is-mobile} {
+        font-size: 2em;
+    }
 }
