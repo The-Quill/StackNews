@@ -91,7 +91,9 @@ async function updatePost(site, post){
             }
         })
         await session.client.hmsetAsync([postKey, ...data])
+        await sleep.sleep(2)
         await session.client.saddAsync(`posts:${site}`, `${post.question_id}`)
+        await sleep.sleep(2)
         return session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`)
     } catch (error){
         console.error(error)
