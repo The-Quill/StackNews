@@ -31,6 +31,10 @@
         display: inline;
         width: 30px;
         height: 30px;
+        @media #{$is-mobile} {
+            width: 80px;
+            height: 80px;
+        }
         margin-right: 10px;
     }
     .tag {
@@ -55,6 +59,19 @@
         a {
             bottom: 6px;
             position: relative;
+            @media #{$is-mobile} {
+                font-size: 2em;
+                margin-right: 9px;
+            }
+        }
+        img {
+            @media #{$is-mobile} {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        @media #{$is-mobile} {
+            padding-top: 11px;
         }
     }
     .post-details {
@@ -62,6 +79,9 @@
         span {
             top: 6px;
             position: relative;
+            @media #{$is-mobile} {
+                font-size: 2.5em;
+            }
         }
     }
     p {
