@@ -4,10 +4,10 @@ import { Time } from '../modules/time'
 import sleep from 'sleep'
 import debug from '../modules/debug'
 
-const session = new RedisSession();
 const time    = new Time();
 
 try {
+    var session = new RedisSession();
     session.client.getAsync('post:last-fetch-date')
     .then(async function(res, reply) {
         if (reply === null || time.weekOlder(res)){
@@ -40,6 +40,7 @@ try {
 
 async function updatePost(site, post){
     try {
+        var session = new RedisSession();
         const postKey = `post:${site}:${post.question_id}`;
         var data = []
         let addData = (...keys) => {
@@ -91,10 +92,10 @@ async function updatePost(site, post){
             }
         })
         await session.client.hmsetAsync([postKey, ...data])
-        await sleep.sleep(10)
+        await sleep.sleep(5)
         await session.client.saddAsync(`posts:${site}`, `${post.question_id}`)
-        await sleep.sleep(10)
-        return session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`)
+        await session.client.zaddAsync('posts', post.creation_date, `${site}:${post.question_id}`)
+        return session.end()
     } catch (error){
         console.error(error)
         return Promise.reject(error);
