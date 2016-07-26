@@ -185,15 +185,28 @@ Have you done this, or would you like to now? (yes or no)"
         esac
     done
 
+    #write out current crontab
+    crontab -l > mycron
+    #echo new cron into cron file
+    echo "/usr/bin/node /home/StackNews/dist/cron/posts.js "
+    #install new cron file
+
+
     if [ -f "$cron_dir/posts.js" ]
     then
-        echo "$cron_content/posts.js" > "/etc/cron.hourly/posts"
+        crontab -l > mycron
+        echo "30 * * * *  $cron_content/posts.js > $DIR/posts.log" >> mycron
         echo "Posts CRON job added."
+        crontab mycron
+        rm mycron
     fi
     if [ -f "$cron_dir/sites.js" ]
     then
-        echo "$cron_content/sites.js" > "/etc/cron.daily/sites"
+        crontab -l > mycron
+        echo "0 23 * * * $cron_content/sites.js > $DIR/sites.log" >> mycron
         echo "Sites CRON job added."
+        crontab mycron
+        rm mycron
     fi
 
     echo "start on runlevel [2345]
