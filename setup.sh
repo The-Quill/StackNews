@@ -185,12 +185,6 @@ Have you done this, or would you like to now? (yes or no)"
         esac
     done
 
-    #write out current crontab
-    crontab -l > mycron
-    #echo new cron into cron file
-    echo "/usr/bin/node /home/StackNews/dist/cron/posts.js "
-    #install new cron file
-
 
     if [ -f "$cron_dir/posts.js" ]
     then
