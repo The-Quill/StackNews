@@ -1,7 +1,8 @@
 import Route from '../../modules/route'
+import debug from '../../modules/debug'
 import Path from 'path'
 
-var FileRoute = new Route('File', true);
+var FileRoute = new Route('File', debug.medium);
 FileRoute.router = function(req, res) {
     const { path } = req
     if (path == ""){

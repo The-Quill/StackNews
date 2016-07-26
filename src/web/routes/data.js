@@ -1,8 +1,9 @@
 import Route from '../../modules/route'
+import debug from '../../modules/debug'
 import { LoadNewPosts } from '../../modules/se_api'
 
 
-var DataRoute = new Route('Data', true);
+var DataRoute = new Route('Data', debug.high);
 DataRoute.router = async function(req, res) {
     let { page } = req.params;
     let count = 30;
