@@ -194,19 +194,13 @@ Have you done this, or would you like to now? (yes or no)"
 
     if [ -f "$cron_dir/posts.js" ]
     then
-        crontab -l > mycron
-        echo "30 * * * *  $cron_content/posts.js > $DIR/posts.log" >> mycron
+        echo "30 * * * *  $cron_content/posts.js > $DIR/posts.log" >> /etc/crontab
         echo "Posts CRON job added."
-        crontab mycron
-        rm mycron
     fi
     if [ -f "$cron_dir/sites.js" ]
     then
-        crontab -l > mycron
-        echo "0 23 * * * $cron_content/sites.js > $DIR/sites.log" >> mycron
+        echo "0 23 * * * $cron_content/sites.js > $DIR/sites.log" >> /etc/crontab
         echo "Sites CRON job added."
-        crontab mycron
-        rm mycron
     fi
 
     echo "start on runlevel [2345]
