@@ -1,8 +1,10 @@
 import debug from './debug'
 import defaults from '../../web.config.json'
 import otherDefaults from '../web/defaults.json'
+import { Time } from './time'
+
 class Route {
-    constructor(name, log){
+    constructor(name, log = debug.high){
         this.log = log;
         this.name = name;
     }
@@ -24,7 +26,7 @@ class Route {
             }
             if (that.log){
                 let { path } = req
-                debug.high(`${that.name}: - Access attempt on variable at path: ${path}`)
+                that.log(`[${new Time().timestamp}] ${that.name} - Attempt at path: ${path}`)
             }
             that._router(req, res)
         }

@@ -10,6 +10,9 @@ export class Time {
     get unix(){
         return this.now
     }
+    get timestamp(){
+        return moment(this._now).format("HH:mm:SS");
+    }
 
     before(time) {
         return moment(this.now).isBefore(time)
