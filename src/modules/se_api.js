@@ -112,7 +112,7 @@ async function GetPostsFromSite(sitename = 'meta', since = '0'){
     }
     try {
         let posts = await fetchUntilEnd(options)
-        debug.medium(` - Grabbed ${posts.length} posts from ${sitename}`)
+        if (posts.length > 0) debug.medium(` - Grabbed ${posts.length} posts from ${sitename}`)
         return Promise.resolve(posts)
     } catch (error){
         return Promise.reject(error)
