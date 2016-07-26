@@ -38,7 +38,7 @@ This project is licensed under the MIT License.
 [photo]:http://i.stack.imgur.com/TCkXn.png
 [react]:https://facebook.github.io/react/
 [redux]:http://redux.js.org/
-[blog_post]:example.com
+[blog_post]:http://418stat.us/2016/07/introducing-stacknews/
 [haproxy]:http://www.haproxy.org/
 [redis]:http://redis.io/
 [express]:https://expressjs.com/
