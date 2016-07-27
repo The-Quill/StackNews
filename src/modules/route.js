@@ -14,8 +14,12 @@ class Route {
     get router(){
         var that = this;
         return (req, res) => {
+            let localhostIps = [
+                '::1',
+                '127.0.0.1'
+            ]
             let proxyIP = req.ip;
-            if (proxyIP.replace('::ffff:', '') != defaults.haproxy.IP){
+            if (proxyIP.replace('::ffff:', '') != defaults.haproxy.IP && localhostIps.indexOf(proxyIP) == -1){
                 res.set("Connection", "close");
                 res.set('Proof', 'close');
                 var video = otherDefaults.youtubeVideosToRedirectTo[
